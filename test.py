@@ -6,8 +6,8 @@ model_path = get_model_path()
 print ("Model path : "+model_path)
 
 speech = LiveSpeech(
-    verbose=True,
-    sampling_rate=16000,
+	verbose=True,
+	sampling_rate=16000,
     buffer_size=2048,
     no_search=False,
     full_utt=False,
