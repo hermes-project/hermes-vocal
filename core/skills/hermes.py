@@ -14,39 +14,36 @@ Skill.addSkill(keywords, result)
 keywords = ["bonjour",
             "salut"]
 
-results = ["bonjour !",
-           "Salut !",
-           "Bien le bonjour, humain !"]
 
 def result():
-    return(Skill.randomAnswer(results))
+    return(Skill.randomAnswer(["bonjour !",
+           "Salut !",
+           "Bien le bonjour, humain !"]))
 
 Skill.addSkill(keywords, result)
 
 
 keywords = ["imite le dindon"]
 
-results = ["Glouglouglouglou"]
+
 
 def result():
-    return(Skill.randomAnswer(results))
+    return(Skill.randomAnswer(["Glouglouglouglou"]))
 
 Skill.addSkill(keywords, result)
 
 keywords = ["TSP"]
 
-results = ["TSP il fallait l'inventé SP"]
+
 
 def result():
-    return(Skill.randomAnswer(results))
+    return(Skill.randomAnswer(["TSP il fallait l'inventé SP"]))
 
 Skill.addSkill(keywords, result)
 
 keywords = ["TEM"]
 
-results = ["TEM, comme dirait Jean-Pierre Coffe, C'est de la merde"]
-
 def result():
-    return(Skill.randomAnswer(results))
+    return(Skill.randomAnswer(["TEM, comme dirait Jean-Pierre Coffe, C'est de la merde"]))
 
 Skill.addSkill(keywords, result)
