@@ -11,9 +11,9 @@ speech = LiveSpeech(
     buffer_size=2048,
     no_search=False,
     full_utt=False,
-    hmm=os.path.join(model_path, 'fr/fr'),
-    lm=os.path.join(model_path, 'fr/fr-small.lm'),
-    dic=os.path.join(model_path, 'fr/fr.dict')
+    hmm=os.path.join(model_path, 'fr-fr'),
+    lm=os.path.join(model_path, 'fr-small.lm'),
+    dic=os.path.join(model_path, 'fr.dict')
 )
 
 for phrase in speech:
