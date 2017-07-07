@@ -1,18 +1,13 @@
 # Core of Hermes-vocal
-from core import Skill
-testSkill = Skill.Skill()
 
-skills = [testSkill]
+from core.skills import Skill
+from core.skills import hermes
 
-def findSkill(order):
-    for skill in skills:
+def executeSkill(order):
+    order.strip(',.').lower()
+    for skill in Skill.SkillsList:
         if skill.ask(order):
-            skill.execute()
-            return
-    print("Pouvez vous répéter ?")
+            return(skill.execute())
+    return("je ne comprend pas, pouvez vous répéter ?")
 
-
-def processOrder(order):
-    print("processOrder : "+ order)
-    findSkill(order)
 

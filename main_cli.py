@@ -11,6 +11,6 @@ print("######################")
 while(42):
     order = input("Order : ")
 
-    core.processOrder(order)
+    print("\n"+core.executeSkill(order))
 
     print("\n--------------\n")
