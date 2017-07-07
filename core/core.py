@@ -1,7 +1,7 @@
 # Core of Hermes-vocal
 
 from core.skills import Skill
-from core.skills import hermes
+from core.skills import *
 
 def executeSkill(order):
     order.strip(',.').lower()
