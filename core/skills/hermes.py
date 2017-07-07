@@ -22,3 +22,31 @@ def result():
     return(Skill.randomAnswer(results))
 
 Skill.addSkill(keywords, result)
+
+
+keywords = ["imite le dindon"]
+
+results = ["Glouglouglouglou"]
+
+def result():
+    return(Skill.randomAnswer(results))
+
+Skill.addSkill(keywords, result)
+
+keywords = ["TSP"]
+
+results = ["TSP il fallait l'inventé SP"]
+
+def result():
+    return(Skill.randomAnswer(results))
+
+Skill.addSkill(keywords, result)
+
+keywords = ["TEM"]
+
+results = ["TEM, comme dirait Jean-Pierre Coffe, C'est de la merde"]
+
+def result():
+    return(Skill.randomAnswer(results))
+
+Skill.addSkill(keywords, result)
