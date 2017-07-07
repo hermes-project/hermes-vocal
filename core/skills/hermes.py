@@ -37,13 +37,17 @@ keywords = ["TSP"]
 
 
 def result():
-    return(Skill.randomAnswer(["TSP il fallait l'inventé SP"]))
+    return(Skill.randomAnswer(["TSP il fallait l'inventé SP",
+                               "La seule chose à garder de TSP c'est INTech",
+                               "De toute façon vous deviendrais consultant ici"]))
 
 Skill.addSkill(keywords, result)
 
 keywords = ["TEM"]
 
 def result():
-    return(Skill.randomAnswer(["TEM, comme dirait Jean-Pierre Coffe, C'est de la merde"]))
+    return(Skill.randomAnswer(["T E M, comme dirait Jean-Pierre Coffe, C'est de la merde",
+                               "T E M ce n'est pas une vrai école, ce n'est que de la poudre de perlimpinpin",
+                               "T E M, on vous encule !!! hashtag R P Z le roux des républicains"]))
 
 Skill.addSkill(keywords, result)
