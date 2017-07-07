@@ -10,3 +10,15 @@ def result():
     return("Je suis Hermes, une IA codée par deux génies")
 
 Skill.addSkill(keywords, result)
+
+keywords = ["bonjour",
+            "salut"]
+
+results = ["bonjour !",
+           "Salut !",
+           "Bien le bonjour, humain !"]
+
+def result():
+    return(Skill.randomAnswer(results))
+
+Skill.addSkill(keywords, result)

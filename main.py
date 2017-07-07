@@ -1,6 +1,21 @@
+# Vocal interface
+
 from core.SpeechAndText import STTTS
 
-STTTS.tts("ceci est un test")
-STTTS.tts("Je ne suis pas un héros")
-STTTS.tts("C'est de la poudre de perlimpinpin")
-STTTS.tts("Tout marche bien")
+import logging
+from core import core
+#logging.basicConfig(level=logging.DEBUG)
+
+print("######################")
+print("#    Hermes-vocal    #")
+print("######################")
+
+while(42):
+    order = input("Order : ")
+
+    ret = core.executeSkill(order)
+
+    print("\n"+ret)
+    STTTS.tts(ret)
+
+    print("\n--------------\n")
