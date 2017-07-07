@@ -6,5 +6,5 @@ def tts(string):
     if len(string) != 0:
         ttsg = gTTS(text=string, lang='fr')
         ttsg.save("good.mp3")
-        os.system("mpg321 good.mp3 2> /dev/null")
+        os.system("mplayer good.mp3 1> /dev/null 2> /dev/null")
 
