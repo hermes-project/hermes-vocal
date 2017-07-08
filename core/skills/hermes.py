@@ -11,6 +11,16 @@ def result():
 
 Skill.addSkill(keywords, result)
 
+keywords = ["qui sont tes créateurs",
+            "qui sont tes createurs",
+            "qui est ton créateur",
+            "qui est ton createur"]
+
+def result():
+    return("Mes créateurs sont Jean-Baptiste Trailin et Rémi Dulong")
+
+Skill.addSkill(keywords, result)
+
 keywords = ["bonjour",
             "salut"]
 
