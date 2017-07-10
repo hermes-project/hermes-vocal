@@ -48,9 +48,26 @@ class Skill:
         return(self.result())
 
 
+class TextSkill(Skill):
+
+    def result(self):
+        return (random.choice(self.results))
+
+    def __init__(self, keyphrases, superwords, results):
+
+        self.results = results
+        super().__init__(keyphrases, superwords, self.result)
+
+
+
+
 def randomAnswer(answers):
     return(random.choice(answers))
 
 def addSkill(keywords, superwords,result):
     skill = Skill(keywords, superwords, result)
+    SkillsList.append(skill)
+
+def addTextSkill(keywords, superwords,results):
+    skill = TextSkill(keywords, superwords, results)
     SkillsList.append(skill)
