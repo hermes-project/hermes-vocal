@@ -4,8 +4,9 @@ SkillsList = []
 
 class Skill:
 
-    def __init__(self, keyphrases, result):
+    def __init__(self, keyphrases,superwords, result):
         self.keyphrases = keyphrases
+        self.superwords = superwords
         miscKeyPhrases = [wordPhrase.split() for wordPhrase in self.keyphrases]
         miscKeyWords = []
         for miscKeyphrase in miscKeyPhrases :
@@ -31,12 +32,15 @@ class Skill:
         orderWords = order.split()
         res = 0
         for orderWord in orderWords :
-            print("Modele : " + orderWord)
+            ##print("Modele : " + orderWord)
             for keyword in self.keywords :
-                print("test : "+keyword)
+                ##print("test : "+keyword)
                 if keyword == orderWord :
-                    print("MATCH !!!")
-                    res+=1
+                    ##print("MATCH !!!")
+                    if(keyword in self.superwords) :
+                        res+=10
+                    else :
+                        res+=1
         return res
 
 
@@ -47,6 +51,6 @@ class Skill:
 def randomAnswer(answers):
     return(random.choice(answers))
 
-def addSkill(keywords, result):
-    skill = Skill(keywords, result)
+def addSkill(keywords, superwords,result):
+    skill = Skill(keywords, superwords, result)
     SkillsList.append(skill)

@@ -14,23 +14,37 @@ def executeSkill(order):
     for skill in Skill.SkillsList:
         scores.append(skill.similitude(order))
 
-    maxSimilitudeIndex = scores.index(max(scores))
     maxSimilitude = max(scores)
-    for i in range(len(scores)) :
-        if (scores[i] == maxSimilitude) and (i!=maxSimilitudeIndex): # Si on a 2 max similitude, pas la peine d'essayer !
-            print("2 phrases de même similarité !")
-            print(scores)
-            return "Je ne comprend pas cette phrase."
+    maxSimilitudeIndex = scores.index(maxSimilitude)
 
-    avgSimilitude = mean(scores)
 
-    if avgSimilitude == 0 : # Si on a aucun mot commun nulle part
+    secScores = []
+    secScores += scores
+    secScores[maxSimilitudeIndex] = 0
+
+    secMaxSimilitude = max(secScores)
+    secMaxSimilitudeIndex = scores.index(secMaxSimilitude)
+
+    print(scores)
+
+    if(secMaxSimilitude == maxSimilitude) :
+        print("2 phrases de même similarité !")
+        return "Je ne comprend pas cette phrase."
+
+
+    if(maxSimilitude == 0) : # Si on a aucun mot commun nulle part
         print("Pas de mot commun !")
         return "Je ne comprend pas cette phrase."
 
 
-    if maxSimilitude/avgSimilitude > 2 :
-        return(Skill.SkillsList[maxSimilitudeIndex].execute())
+
+
+
+    if maxSimilitude > 5*secMaxSimilitude :
+        if(maxSimilitude >= 10) :
+            return(Skill.SkillsList[maxSimilitudeIndex].execute())
+
+
 
     return("je ne comprend pas, pouvez vous répéter ?")
 

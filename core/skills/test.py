@@ -7,7 +7,9 @@ results = ["Test ? Allo ?",
            "Test, 1, 2, Test !",
            "test réussi !"]
 
+word = ["test"]
+
 def result():
     return(Skill.randomAnswer(results))
 
-Skill.addSkill(keywords, result)
+Skill.addSkill(keywords, word, result)
