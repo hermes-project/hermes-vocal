@@ -74,7 +74,7 @@ decoder.end_utt()
 print('An Error occured:', decoder.hyp().hypstr)
 """
 
-'''
+
 import os
 from pocketsphinx import LiveSpeech, get_model_path
 from core import core
@@ -86,25 +86,47 @@ print ("Model path : "+model_path)
 
 
 
-
-
 speech = LiveSpeech(
-	verbose=False,
-	sampling_rate=16000,
-    buffer_size=2048,
-    no_search=False,
-    full_utt=False,
+    lm=False,
+    keyphrase='salut',
+    kws_threshold=1e+20,
     hmm=os.path.join(model_path, 'fr-fr'),
-    lm=os.path.join(model_path, 'fr-small.lm'),
     dic=os.path.join(model_path, 'fr.dict')
 )
 
+
 for phrase in speech:
-    print("order")
-    order = str(phrase)
-    print(order)
-    ret = core.executeSkill(order)
-    print("ret")
-    STTTS.tts(ret)
+    print(phrase.segments(detailed=True))
+    speech2 = LiveSpeech(
+        verbose=False,
+        sampling_rate=16000,
+        buffer_size=2048,
+        no_search=False,
+        full_utt=False,
+        hmm=os.path.join(model_path, 'fr-fr'),
+        lm=os.path.join(model_path, 'fr-small.lm'),
+        dic=os.path.join(model_path, 'fr.dict')
+    )
+
+
+    for phrase in speech2:
+        print("order")
+        order = str(phrase)
+        print(order)
+        if(len(order) != 0):
+            ret = core.executeSkill(order)
+            print("ret")
+            print(ret)
+            STTTS.tts(ret)
+            if(ret != "Je ne comprend pas cette phrase.") :
+                break
+
+
+
+
+
+
 '''
 
+
+'''

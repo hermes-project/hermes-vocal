@@ -46,6 +46,6 @@ def executeSkill(order):
 
 
 
-    return("je ne comprend pas, pouvez vous répéter ?")
+    return("Je ne comprend pas cette phrase.")
 
 
