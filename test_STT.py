@@ -1,28 +1,132 @@
+"""
+from pocketsphinx import get_model_path
+import os
+import sys
+from ctypes import *
+from contextlib import contextmanager
+
+import pyaudio
+from pocketsphinx.pocketsphinx import *
+from sphinxbase.sphinxbase import *
+
+script_dir = os.path.dirname(os.path.realpath(__file__))
+model_path = get_model_path()
+
+hmm=os.path.join(model_path, 'fr-fr')
+lm=os.path.join(model_path, 'fr-small.lm')
+dic=os.path.join(model_path, 'fr.dict')
+
+sys.stderr = open(os.path.join(script_dir, "stderr.log"), "a")
+
+ERROR_HANDLER_FUNC = CFUNCTYPE(None, c_char_p, c_int, c_char_p, c_int, c_char_p)
+
+
+def py_error_handler(filename, line, function, err, fmt):
+    pass
+c_error_handler = ERROR_HANDLER_FUNC(py_error_handler)
+
+
+@contextmanager
+def noalsaerr():
+    asound = cdll.LoadLibrary('libasound.so')
+    asound.snd_lib_error_set_handler(c_error_handler)
+    yield
+    asound.snd_lib_error_set_handler(None)
+
+config = Decoder.default_config()
+config.set_string('-hmm', hmm)
+config.set_string('-lm', lm)
+config.set_string('-dict', dic)
+config.set_string('-logfn', '/dev/null')
+decoder = Decoder(config)
+
+with noalsaerr():
+    p = pyaudio.PyAudio()
+stream = p.open(format=pyaudio.paInt16, channels=1, rate=16000, input=True, frames_per_buffer=1024)
+stream.start_stream()
+in_speech_bf = True
+decoder.start_utt()
+while True:
+    buf = stream.read(1024)
+    if buf:
+        decoder.process_raw(buf, False, False)
+        try:
+            if decoder.hyp().hypstr != '':
+                print('Partial decoding result:', decoder.hyp().hypstr)
+        except AttributeError:
+            pass
+        if decoder.get_in_speech():
+            sys.stdout.write('.')
+            sys.stdout.flush()
+        if decoder.get_in_speech() != in_speech_bf:
+            in_speech_bf = decoder.get_in_speech()
+            if not in_speech_bf:
+                decoder.end_utt()
+                try:
+                    if decoder.hyp().hypstr != '':
+                        print('Stream decoding result:', decoder.hyp().hypstr)
+                except AttributeError:
+                    pass
+                decoder.start_utt()
+    else:
+        break
+decoder.end_utt()
+print('An Error occured:', decoder.hyp().hypstr)
+"""
+
+
 import os
 from pocketsphinx import LiveSpeech, get_model_path
+from core import core
+from core.SpeechAndText import STTTS
 
 model_path = get_model_path()
 
 print ("Model path : "+model_path)
 
+
+
 speech = LiveSpeech(
-	verbose=True,
-	sampling_rate=16000,
-    buffer_size=2048,
-    no_search=False,
-    full_utt=False,
+    lm=False,
+    keyphrase='salut',
+    kws_threshold=1e+20,
     hmm=os.path.join(model_path, 'fr-fr'),
-    lm=os.path.join(model_path, 'fr-small.lm'),
     dic=os.path.join(model_path, 'fr.dict')
 )
 
+
 for phrase in speech:
-    print(phrase)
+    print(phrase.segments(detailed=True))
+    speech2 = LiveSpeech(
+        verbose=False,
+        sampling_rate=16000,
+        buffer_size=2048,
+        no_search=False,
+        full_utt=False,
+        hmm=os.path.join(model_path, 'fr-fr'),
+        lm=os.path.join(model_path, 'fr-small.lm'),
+        dic=os.path.join(model_path, 'fr.dict')
+    )
 
-#from pocketsphinx import LiveSpeech
 
-#hmdir = "/usr/share/pocketsphinx/model/fr/fr"
-#lmd = "/usr/share/pocketsphinx/model/fr/fr-small.lm"
-#dictd = "/usr/share/pocketsphinx/model/fr/fr.dict"
+    for phrase in speech2:
+        print("order")
+        order = str(phrase)
+        print(order)
+        if(len(order) != 0):
+            ret = core.executeSkill(order)
+            print("ret")
+            print(ret)
+            STTTS.tts(ret)
+            if(ret != "Je ne comprend pas cette phrase.") :
+                break
 
-#for phrase in LiveSpeech(): print(phrase)
+
+
+
+
+
+'''
+
+
+'''
