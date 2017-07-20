@@ -2,7 +2,6 @@ from tkinter import *
 from tkinter import messagebox
 
 import json
-import re
 
 
 # Callbacks
@@ -20,6 +19,11 @@ def askClose():
     else:
         close()
 
+def suppressSkill(skillzone, listElement):
+    print(listElement[0].get(1.0, "end-1c"))
+    skillZoneList.remove(listElement)
+    skillzone.pack_forget()
+
 def newSkill():
     skillzone = LabelFrame(fenetre)
     skillzone.pack()
@@ -29,6 +33,10 @@ def newSkill():
     responses = Text(skillzone, width=50, height=10)
 
     skillZoneList.append([key, superwords, responses])
+
+    Button(skillZone, text="Supprimer",
+           command=lambda: suppressSkill(skillZone, [keyPhrasesText, superWordsText, responsesText])
+           ).pack(side=RIGHT)
 
     key.pack(side=LEFT)
     superwords.pack(side=LEFT)
@@ -49,7 +57,7 @@ def save():
         #newjson = data_file
         for skillzone in skillZoneList:
             new = {}
-            new['keyPhrases']=getSeparatedStrings(skillzone[0])
+            new['keyPhrases']= getSeparatedStrings(skillzone[0])
             new['superWords']= getSeparatedStrings(skillzone[1])
             new['responses']= getSeparatedStrings(skillzone[2])
             newlist.append(new)
@@ -96,6 +104,9 @@ for skill in data["skillList"] :
     responsesText=Text(skillZone, width=50, height=10)
     for response in skill["responses"] :
         responsesText.insert(END, response+"\n")
+
+    Button(skillZone, text="Supprimer", command=lambda: suppressSkill(skillZone, [keyPhrasesText, superWordsText, responsesText])
+           ).pack(side=RIGHT)
 
     skillZoneList.append([keyPhrasesText, superWordsText, responsesText])
 
