@@ -19,6 +19,9 @@ def askClose():
     else:
         close()
 
+def lol (a):
+    print(a)
+
 def suppressSkill(skillzone, listElement):
     print(listElement[0].get(1.0, "end-1c"))
     skillZoneList.remove(listElement)
@@ -34,8 +37,10 @@ def newSkill():
 
     skillZoneList.append([key, superwords, responses])
 
-    Button(skillZone, text="Supprimer",
-           command=lambda: suppressSkill(skillZone, [keyPhrasesText, superWordsText, responsesText])
+    Button(skillzone, text="Supprimer",
+           command=lambda skillZoneL=skillzone, keyPhrasesTextL=key, superWordTextL=superwords,
+                          responsesTextL=responses: suppressSkill(skillZoneL,
+                                                                      [keyPhrasesTextL, superWordTextL, responsesTextL])
            ).pack(side=RIGHT)
 
     key.pack(side=LEFT)
@@ -91,31 +96,32 @@ with open('core/skills/phrases.json', encoding='utf-8') as data_file:
 
 skillZoneList = []
 
-for skill in data["skillList"] :
-    skillZone = LabelFrame(fenetre, text=skill["keyPhrases"][0])
-    skillZone.pack()
+def load():
+    for skill in data["skillList"] :
+        skillZone = LabelFrame(fenetre, text=skill["keyPhrases"][0])
+        skillZone.pack()
 
-    keyPhrasesText=Text(skillZone, width=50, height=10)
-    for keyphrase in skill["keyPhrases"] :
-        keyPhrasesText.insert(END, keyphrase+"\n")
-    superWordsText=Text(skillZone, width=50, height=10)
-    for superword in skill["superWords"] :
-        superWordsText.insert(END, superword+"\n")
-    responsesText=Text(skillZone, width=50, height=10)
-    for response in skill["responses"] :
-        responsesText.insert(END, response+"\n")
+        keyPhrasesText=Text(skillZone, width=50, height=10)
+        for keyphrase in skill["keyPhrases"] :
+            keyPhrasesText.insert(END, keyphrase+"\n")
+        superWordsText=Text(skillZone, width=50, height=10)
+        for superword in skill["superWords"] :
+            superWordsText.insert(END, superword+"\n")
+        responsesText=Text(skillZone, width=50, height=10)
+        for response in skill["responses"] :
+            responsesText.insert(END, response+"\n")
 
-    Button(skillZone, text="Supprimer", command=lambda: suppressSkill(skillZone, [keyPhrasesText, superWordsText, responsesText])
-           ).pack(side=RIGHT)
+        Button(skillZone, text="Supprimer", command=lambda skillZoneL=skillZone,keyPhrasesTextL=keyPhrasesText,superWordTextL=superWordsText,responsesTextL=responsesText: suppressSkill(skillZoneL, [keyPhrasesTextL, superWordTextL, responsesTextL])
+               ).pack(side=RIGHT)
 
-    skillZoneList.append([keyPhrasesText, superWordsText, responsesText])
+        skillZoneList.append([keyPhrasesText, superWordsText, responsesText])
 
-    keyPhrasesText.pack(side=LEFT)
-    superWordsText.pack(side=LEFT)
-    responsesText.pack(side=LEFT)
+        keyPhrasesText.pack(side=LEFT)
+        superWordsText.pack(side=LEFT)
+        responsesText.pack(side=LEFT)
 
 
-
+load()
 
 
 
