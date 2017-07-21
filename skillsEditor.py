@@ -92,6 +92,21 @@ vsb = Scrollbar(root, orient="vertical", command=canvas.yview)
 hsb = Scrollbar(root, orient="horizontal", command=canvas.xview)
 canvas.configure(yscrollcommand=vsb.set, xscrollcommand=hsb.set)
 
+def mouse_wheel(event):
+    if event.num == 5 or event.delta == -120:
+        canvas.yview("scroll", 1, "units")
+    if event.num == 4 or event.delta == 120:
+        canvas.yview("scroll", -1, "units")
+
+
+    return "break"
+
+root.bind("<Button-4>", mouse_wheel)
+root.bind("<Button-5>", mouse_wheel)
+
+
+
+
 vsb.pack(side=RIGHT, fill="y")
 hsb.pack(side=BOTTOM, fill="x")
 canvas.pack(side="left", fill="both", expand="True")
