@@ -86,8 +86,8 @@ def onFrameConfigure(canvas):
 
 root = Tk()
 
-canvas = Canvas(root, borderwidth=0, background="#ffffff")
-fenetre = Frame(canvas, background="#ffffff")
+canvas = Canvas(root, borderwidth=0, background="#ffffff", width=1200, height=800)
+fenetre = Frame(canvas, background="#ffffff", width=1200, height=800)
 vsb = Scrollbar(root, orient="vertical", command=canvas.yview)
 hsb = Scrollbar(root, orient="horizontal", command=canvas.xview)
 canvas.configure(yscrollcommand=vsb.set, xscrollcommand=hsb.set)
