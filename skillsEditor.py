@@ -7,8 +7,7 @@ import json
 # Callbacks
 
 def close():
-    global fenetre
-    fenetre.destroy()
+    root.destroy()
 
 def askClose():
     if(messagebox.askyesnocancel("Quit", "Do you want to save ?")):
@@ -19,8 +18,6 @@ def askClose():
     else:
         close()
 
-def lol (a):
-    print(a)
 
 def suppressSkill(skillzone, listElement):
     print(listElement[0].get(1.0, "end-1c"))
@@ -62,10 +59,17 @@ def save():
         #newjson = data_file
         for skillzone in skillZoneList:
             new = {}
-            new['keyPhrases']= getSeparatedStrings(skillzone[0])
-            new['superWords']= getSeparatedStrings(skillzone[1])
-            new['responses']= getSeparatedStrings(skillzone[2])
-            newlist.append(new)
+            localkeyphrases = getSeparatedStrings(skillzone[0])
+            localsuperwords = getSeparatedStrings(skillzone[1])
+            localresponses = getSeparatedStrings(skillzone[2])
+            if(localkeyphrases and localsuperwords and localresponses):
+                new['keyPhrases']= localkeyphrases
+                new['superWords']= localsuperwords
+                new['responses']= localresponses
+                newlist.append(new)
+            else:
+                messagebox.showerror(title="Impossible de sauvegarder une case vide !")
+                break
 
         data = {}
         data['skillList'] = newlist
@@ -75,13 +79,25 @@ def save():
         print(jsonString)
         data_file.write(jsonString)
 
+def onFrameConfigure(canvas):
+    canvas.configure(scrollregion=canvas.bbox("all"))
 
 ###
 
-fenetre = Tk()
+root = Tk()
 
-scroll=Scrollbar(fenetre)
-scroll.pack(side=RIGHT, fill=Y)
+canvas = Canvas(root, borderwidth=0, background="#ffffff")
+fenetre = Frame(canvas, background="#ffffff")
+vsb = Scrollbar(root, orient="vertical", command=canvas.yview)
+hsb = Scrollbar(root, orient="horizontal", command=canvas.xview)
+canvas.configure(yscrollcommand=vsb.set, xscrollcommand=hsb.set)
+
+vsb.pack(side=RIGHT, fill="y")
+hsb.pack(side=BOTTOM, fill="x")
+canvas.pack(side="left", fill="both", expand="True")
+canvas.create_window((4, 4), window=fenetre, anchor="nw")
+
+fenetre.bind("<Configure>", lambda event, canvas=canvas: onFrameConfigure(canvas))
 
 intro = LabelFrame(fenetre, text="Skill Editor for Hermes-Vocal")
 Button(intro, text="Quit", command=close).pack(side=RIGHT)
@@ -125,5 +141,5 @@ load()
 
 
 
-fenetre.mainloop()
+root.mainloop()
 
