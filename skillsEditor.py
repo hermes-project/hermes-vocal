@@ -10,11 +10,9 @@ def close():
     root.destroy()
 
 def askClose():
-    if(messagebox.askyesnocancel("Quit", "Do you want to save ?")):
-        print("TODO : SAVE")
+    if(messagebox.askyesno("Quit", "Voulez vous sauvegarder ?")):
+        save()
         close()
-    elif "cancel":
-        pass
     else:
         close()
 
@@ -115,7 +113,7 @@ canvas.create_window((4, 4), window=fenetre, anchor="nw")
 fenetre.bind("<Configure>", lambda event, canvas=canvas: onFrameConfigure(canvas))
 
 intro = LabelFrame(fenetre, text="Skill Editor for Hermes-Vocal")
-Button(intro, text="Quit", command=close).pack(side=RIGHT)
+Button(intro, text="Quit", command=askClose).pack(side=RIGHT)
 Button(intro, text="Save", command=save).pack(side=RIGHT)
 Button(intro, text="New Skill", command=newSkill).pack()
 
