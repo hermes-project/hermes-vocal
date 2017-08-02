@@ -18,7 +18,7 @@ while(42):
     client, address = socket.accept()
     logGreen("Client connecté...\n")
 
-    order = client.recv(1024).decode().lower()
+    order = client.recv(1024).decode('utf-8').lower()
     print("Request : ")
     logBlue(order)
 
