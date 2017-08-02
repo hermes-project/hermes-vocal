@@ -17,7 +17,7 @@ class Skill:
             if keyword not in self.keywords :
                 self.keywords.append(keyword)  # Séparation en mots clés uniques
 
-        print(self.keywords)
+        print("Skill loaded : "+self.keyphrases[0])
         self.result = result
 
     def ask(self, order):
@@ -67,6 +67,7 @@ def randomAnswer(answers):
 def addSkill(keywords, superwords,result):
     skill = Skill(keywords, superwords, result)
     SkillsList.append(skill)
+
 
 def addTextSkill(keywords, superwords,results):
     skill = TextSkill(keywords, superwords, results)

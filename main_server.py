@@ -1,31 +1,31 @@
 # Vocal interface
 import socket
-from core.SpeechAndText import STTTS
+from core.utils.logs import *
 
 from core import core
 
 socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 socket.bind(('', 15555))
 
-print("######################")
-print("#    VOCAL SERVER    #")
-print("######################")
+logHeader("######################")
+logHeader("#    VOCAL SERVER    #")
+logHeader("######################")
 
 while(42):
 
-    print("--- Attente de requête ---")
+    logUnderline("--- Attente de requête ---")
 
     socket.listen(5)
     client, address = socket.accept()
-    print("Client connecté...\n")
+    logGreen("Client connecté...\n")
 
-    order = client.recv(1024).decode()
+    order = client.recv(1024).decode().lower()
     print("Request : ")
-    print(order)
+    logBlue(order)
 
     ret = core.executeSkill(order)
 
-    print("Response : "+ret)
+    logBold("Response : "+ret)
     client.send(str.encode(ret))
 
     print("Close")
