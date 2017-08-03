@@ -6,12 +6,12 @@ from numpy import mean
 
 def executeSkill(order):
     order.strip(',.').lower()
-    for skill in Skill.SkillsList:
+    for skill in skillsLoader.SkillsList:
         if skill.ask(order):
             return(skill.execute())
 
     scores = []
-    for skill in Skill.SkillsList:
+    for skill in skillsLoader.SkillsList:
         scores.append(skill.similitude(order))
 
     maxSimilitude = max(scores)
@@ -42,7 +42,7 @@ def executeSkill(order):
 
     if maxSimilitude > 5*secMaxSimilitude :
         if(maxSimilitude >= 10) :
-            return(Skill.SkillsList[maxSimilitudeIndex].execute())
+            return(skillsLoader.SkillsList[maxSimilitudeIndex].execute())
 
 
 

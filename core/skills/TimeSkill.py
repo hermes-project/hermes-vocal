@@ -1,4 +1,4 @@
-from core.skills import Skill
+from core.skills import skillsLoader
 import datetime
 
 # Gestion de l'heure :
@@ -17,4 +17,4 @@ words = [
 def result():
     return "Il est " + datetime.datetime.now().strftime("%I") + " heures et " + datetime.datetime.now().strftime("%M") + " minutes"
 
-Skill.addSkill(phrases, words, result)
+skillsLoader.addSkill(phrases, words, result)
