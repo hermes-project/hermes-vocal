@@ -1,4 +1,6 @@
 from core.skills.Skill import *
+from core.skills.skillsLoader import SkillsList
+import json
 
 class TextSkill(Skill):
 
@@ -11,3 +13,11 @@ class TextSkill(Skill):
         super().__init__(keyphrases, superwords, self.result)
 
 
+
+# Chargement des TextSkills depuis le json
+
+with open('core/skills/phrases.json', encoding='utf-8') as data_file:
+    data = json.load(data_file)
+
+for skill in data["skillList"] :
+    TextSkill(skill["keyPhrases"], skill["superWords"], skill["responses"])

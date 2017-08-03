@@ -1,5 +1,5 @@
 import random
-
+from core.skills.skillsLoader import SkillsList
 
 class Skill:
 
@@ -18,6 +18,7 @@ class Skill:
 
         print("Skill loaded : "+self.keyphrases[0])
         self.result = result
+        SkillsList.append(self)
 
     def ask(self, order):
         # Verification 1 : Phrase exacte
