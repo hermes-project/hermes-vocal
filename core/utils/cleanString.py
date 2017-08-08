@@ -6,3 +6,9 @@ def cleanString(order):
     order = order.replace("â", "a").replace("ê", "e").replace("é", "e").replace("è", "e").replace("ù", "u")
 
     return order
+
+def cleanStringList(phrases):
+    clean = []
+    for i in phrases:
+        clean.append(cleanString(i))
+    return clean
