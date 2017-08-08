@@ -36,12 +36,13 @@ class Skill:
             ##print("Modele : " + orderWord)
             for keyword in self.keywords:
                 ##print("test : "+keyword)
-                if keyword == orderWord:
+                if keyword == orderWord:    # Chaque mot commun ajoute 1 point (doublons non comptés)
                     ##print("MATCH !!!")
-                    if (keyword in self.superwords):
-                        res += 10
-                    else:
-                        res += 1
+                    res += 1
+            for superkeyword in self.superwords:
+                if superkeyword in order:   # Chaque superword présent ajoute un bonus de 10
+                    res += 10
+
         return res
 
     def execute(self,
