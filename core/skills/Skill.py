@@ -44,7 +44,7 @@ class Skill:
         return res
 
 
-    def execute(self):
+    def execute(self, *args):
         return(self.result())
 
 

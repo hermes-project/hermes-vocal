@@ -13,7 +13,7 @@ def randomAnswer(answers):
 from core.skills.Skill import *
 from core.skills.TextSkill import *
 from core.skills.TimeSkill import *
-
+from core.skills.GuideSkill import *
 
 
 

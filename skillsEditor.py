@@ -60,7 +60,7 @@ def save():
             localkeyphrases = getSeparatedStrings(skillzone[0])
             localsuperwords = getSeparatedStrings(skillzone[1])
             localresponses = getSeparatedStrings(skillzone[2])
-            if(localkeyphrases and localsuperwords and localresponses):
+            if(localkeyphrases and localresponses):   # On ne vérifie pas qu'il y ait de superwords car c'est optionnel
                 new['keyPhrases']= localkeyphrases
                 new['superWords']= localsuperwords
                 new['responses']= localresponses

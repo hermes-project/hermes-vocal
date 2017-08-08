@@ -1,4 +1,3 @@
-from core.skills import skillsLoader
 from core.skills.Skill import Skill
 import datetime
 
