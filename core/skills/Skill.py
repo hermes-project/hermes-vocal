@@ -39,9 +39,9 @@ class Skill:
                 if keyword == orderWord:    # Chaque mot commun ajoute 1 point (doublons non comptés)
                     ##print("MATCH !!!")
                     res += 1
-            for superkeyword in self.superwords:
-                if superkeyword in order:   # Chaque superword présent ajoute un bonus de 10
-                    res += 10
+        for superkeyword in self.superwords:
+            if superkeyword in order:   # Chaque superword présent ajoute un bonus de 10
+                res += 10
 
         return res
 
