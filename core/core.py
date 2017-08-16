@@ -4,16 +4,29 @@ from core.skills import skillsLoader
 from core.utils.cleanString import cleanString
 
 
+wordsIgnore = ["salut", "bonjour", "hey", "merci"] # Liste des mots à ignorer en cas d'ordres multiples
+
+def toIgnore(order):
+    ordWords = order.split(" ")
+    for ordword in ordWords:
+        if ordword in wordsIgnore:
+            return True
+    return False
+
 def executeSkill(order):  # Traitement d'un ordre (complexe)
     order = cleanString(order)
     orders = order.split(",")  # On regarde si on peut séparer l'ordre en 2 (si il y a une virgule)
     returns = []
-    for ord in orders:
-        returns.append(computeOrder(ord.lstrip().rstrip()) + "\n")
-    finalreturn = ""
-    for a in returns:
-        finalreturn += a
-    return finalreturn
+    if len(orders) > 1: # Ordre multiple
+        for ord in orders:
+            if not toIgnore(ord):
+                returns.append(computeOrder(ord.lstrip().rstrip()) + "\n") # On ne répond qu'aux ordres pertinents
+        finalreturn = ""
+        for a in returns:
+            finalreturn += a
+        return finalreturn
+    else:
+        return computeOrder(order)
 
 
 def computeOrder(order):    # Traitement d'un ordre simple (splité)

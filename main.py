@@ -1,19 +1,20 @@
 # Vocal interface
 
-from core.SpeechAndText import STTTS
+#from core.SpeechAndText import STTTS
+from core.utils.logs import *
 
 from core import core
 
-print("######################")
-print("#    Hermes-vocal    #")
-print("######################")
+logBold("######################")
+logBold("#    Hermes-vocal    #")
+logBold("######################")
 
 while(42):
     order = input("Order : ")
 
     ret = core.executeSkill(order)
 
-    print("\n"+ret)
-    STTTS.tts(ret)
+    logGreen("\n"+ret)
+    #STTTS.tts(ret)
 
-    print("\n--------------\n")
+    logBlue("\n--------------\n")

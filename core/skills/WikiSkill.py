@@ -14,7 +14,10 @@ phrases = [
     "que peux tu me dire à propos de",
     "que peux tu dire sur",
     "qu'est-ce que tu sais sur",
-    "qu'est-ce que tu sais à propos de"
+    "qu'est-ce que tu sais à propos de",
+    "quelle est la définition de",
+    "cherche la définition sur wikipedia de",
+    "cherche sur wikipedia"
 ]
 
 words = [
@@ -25,6 +28,7 @@ def response(order):
 
     order = cleanString(order)
     for phrase in phrases:
+        phrase = cleanString(phrase)
         if phrase in order:
             order = re.sub(phrase, '', order)
             wikipedia.set_lang("fr")
