@@ -1,9 +1,11 @@
 # Skill pour demander au robot une info sur wikipedia
 
-from core.skills.ArgSkill import ArgSkill
-from core.utils.cleanString import cleanString
 import re
 import wikipedia
+from core.skills.ArgSkill import ArgSkill
+from core.utils.cleanString import cleanString
+from core.communication import *
+import core.utils.client as clientglobal
 
 phrases = [
     "parle moi de",
@@ -31,8 +33,11 @@ def response(order):
         phrase = cleanString(phrase)
         if phrase in order:
             order = re.sub(phrase, '', order)
-            wikipedia.set_lang("fr")
-            return wikipedia.summary(order, sentences=1)
+            if askConfirmation("Voulez vous que je recherche "+order+" sur Wikipédia ?", clientglobal.client):
+                wikipedia.set_lang("fr")
+                return wikipedia.summary(order, sentences=1)
+            else:
+                return("Dommage ! j'en étais capable...")
     return("Je n'ai pas compris ce que vous voulez savoir")
 
 ArgSkill(phrases, words, response)

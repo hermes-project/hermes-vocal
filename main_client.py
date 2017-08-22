@@ -32,7 +32,7 @@ while True:
         while(ret["type"]=="askConfirmation"):     # Tant que le serveur demande des précisions
             logGreen(ret["msg"]+"\n")
             resp = input("Réponse : ")
-            sendConfirmation(resp)
+            sendConfirmation(resp, socket)
             rawRet = socket.recv(1024).decode()
             ret = json.loads(rawRet)
 

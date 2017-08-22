@@ -4,6 +4,7 @@ import json
 from core.utils.logs import *
 from core import core
 from core.communication import *
+import core.utils.client as clientglobal
 
 socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 socket.bind(('', 15555))
@@ -17,10 +18,11 @@ while(42):
     logUnderline("--- Attente de requête ---")
 
     socket.listen(5)
-    client, address = socket.accept()
+    clientglobal.client, address = socket.accept()
+
     logGreen("Client connecté...\n")
 
-    rawOrder = client.recv(1024).decode('utf-8')
+    rawOrder = clientglobal.client.recv(1024).decode('utf-8')
     order = json.loads(rawOrder)
     if (order["type"] == "question" or order["type"] == "confirmation"):
         print("Reçu ordre de type "+order["type"])
@@ -33,10 +35,10 @@ while(42):
     ret = core.executeSkill(order["msg"].lower())
 
     logBold("Response : "+ret)
-    sendAnswer(ret, client)
+    sendAnswer(ret, clientglobal.client)
 
     print("Close")
-    client.close()
+    clientglobal.client.close()
 
     print("\n--------------\n")
 
