@@ -41,7 +41,7 @@ class Skill:
                     res += 1
         for superkeyword in self.superwords:
             if superkeyword in order:   # Chaque superword présent ajoute un bonus de 10
-                res += 10
+                res += 20
 
         return res
 

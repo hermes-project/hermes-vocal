@@ -29,4 +29,5 @@ def askConfirmation(confirmMessage, client):
 
 def recvFromClient(client):
     rawOrder = client.recv(1024).decode('utf-8')
+    print(rawOrder)
     return json.loads(rawOrder)
