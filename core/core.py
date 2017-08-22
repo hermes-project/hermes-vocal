@@ -63,3 +63,5 @@ def computeOrder(order):    # Traitement d'un ordre simple (splité)
             return (skillsLoader.SkillsList[maxSimilitudeIndex].execute(order))
 
     return ("Je ne comprends pas cette phrase")
+
+

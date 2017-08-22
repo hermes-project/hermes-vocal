@@ -1,7 +1,9 @@
 # Vocal interface
 import socket
+import json
 from core.utils.logs import *
 from core import core
+from core.communication import *
 
 socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 socket.bind(('', 15555))
@@ -18,14 +20,20 @@ while(42):
     client, address = socket.accept()
     logGreen("Client connecté...\n")
 
-    order = client.recv(1024).decode('utf-8').lower()
-    print("Request : ")
-    logBlue(order)
+    rawOrder = client.recv(1024).decode('utf-8')
+    order = json.loads(rawOrder)
+    if (order["type"] == "question" or order["type"] == "confirmation"):
+        print("Reçu ordre de type "+order["type"])
+    else:
+        print ("ORDRE DE TYPE NON RECONNU : "+order)
 
-    ret = core.executeSkill(order)
+    print("Request : ")
+    logBlue(order["msg"])
+
+    ret = core.executeSkill(order["msg"].lower())
 
     logBold("Response : "+ret)
-    client.send(str.encode(ret))
+    sendAnswer(ret, client)
 
     print("Close")
     client.close()

@@ -32,6 +32,7 @@ def response(order):
 
     for l in map["label"]:
         if cleanString(l["text"]) in order:
+            
             robot.goto(l["text"])
             return("Je vous amène à "+l["text"])
     return("Je n'ai pas compris votre destination.")
