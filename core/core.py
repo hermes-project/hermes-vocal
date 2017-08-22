@@ -58,9 +58,10 @@ def computeOrder(order):    # Traitement d'un ordre simple (splité)
         print("Pas de mot commun !")
         return "Je ne comprends pas cette phrase."
 
-    if maxSimilitude > 5 * secMaxSimilitude:
+    if maxSimilitude > 3 * secMaxSimilitude:
         if (maxSimilitude >= 10):
             return (skillsLoader.SkillsList[maxSimilitudeIndex].execute(order))
+
 
     return ("Je ne comprends pas cette phrase")
 

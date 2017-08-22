@@ -20,8 +20,8 @@ while(42):
     client, address = socket.accept()
     logGreen("Client connecté...\n")
 
-    rawOrder = client.recv(1024).decode('utf-8')
-    order = json.loads(rawOrder)
+
+    order = recvFromClient(client)
     if (order["type"] == "question" or order["type"] == "confirmation"):
         print("Reçu ordre de type "+order["type"])
     else:
