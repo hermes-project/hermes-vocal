@@ -4,9 +4,10 @@ from core.utils.cleanString import *
 
 
 class Skill:
-    def __init__(self, keyphrases, superwords, result):
+    def __init__(self, keyphrases, superwords,badwords, result):
         self.keyphrases = cleanStringList(keyphrases)  # On clean les phrases connues et les mots clés
         self.superwords = cleanStringList(superwords)
+        self.badwords = cleanStringList(badwords)
         miscKeyPhrases = [wordPhrase.split() for wordPhrase in self.keyphrases]
         miscKeyWords = []
         for miscKeyphrase in miscKeyPhrases:

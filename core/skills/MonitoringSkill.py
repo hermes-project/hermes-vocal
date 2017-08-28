@@ -23,10 +23,14 @@ words = [
     "cpu"
 ]
 
+badwords = [
+
+]
+
 def result():
     return ("Mon processeur est à "+str(psutil.cpu_percent())+" pourcents de ses capacités.")
 
-Skill(phrases, words, result)
+Skill(phrases, words, badwords, result)
 
 # Etat de la RAM
 
@@ -57,7 +61,11 @@ words = [
     "mémoire vive"
 ]
 
+badwords = [
+
+]
+
 def result():
     return ("J'utilise actuellement "+str(int((psutil.virtual_memory().available/psutil.virtual_memory().total)*100))+" pourcents de ma mémoire RAM.")
 
-Skill(phrases, words, result)
+Skill(phrases, words, badwords,result)

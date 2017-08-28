@@ -26,6 +26,10 @@ words = [
 
 ]
 
+badwords = [
+
+]
+
 def response(order):
 
     order = cleanString(order)
@@ -40,4 +44,4 @@ def response(order):
                 return("Dommage ! j'en étais capable...")
     return("Je n'ai pas compris ce que vous voulez savoir")
 
-ArgSkill(phrases, words, response)
+ArgSkill(phrases, words,badwords, response)

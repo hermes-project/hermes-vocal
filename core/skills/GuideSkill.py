@@ -28,6 +28,10 @@ words = [
     "emmene"
 ]
 
+badwords = [
+
+]
+
 def response(order):
 
     for l in map["label"]:
@@ -37,4 +41,4 @@ def response(order):
             return("Je vous amène à "+l["text"])
     return("Je n'ai pas compris votre destination.")
 
-ArgSkill(phrases, words, response)
+ArgSkill(phrases, words,badwords, response)

@@ -14,7 +14,12 @@ words = [
     "heure"
 ]
 
+badwords = [
+    "hier",
+    "demain"
+]
+
 def result():
     return "Il est " + datetime.datetime.now().strftime("%I") + " heures et " + datetime.datetime.now().strftime("%M") + " minutes"
 
-Skill(phrases, words, result)
+Skill(phrases, words,badwords, result)

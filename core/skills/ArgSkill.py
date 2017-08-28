@@ -14,5 +14,5 @@ class ArgSkill(Skill):
     def execute(self, order):
         return self.result(order)
 
-    def __init__(self, keyphrases, superwords, result):
-        super().__init__(keyphrases, superwords, result)
+    def __init__(self, keyphrases, superwords,badwords, result):
+        super().__init__(keyphrases, superwords,badwords, result)

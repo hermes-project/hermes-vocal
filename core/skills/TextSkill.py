@@ -7,10 +7,10 @@ class TextSkill(Skill):
     def result(self):
         return (random.choice(self.results))
 
-    def __init__(self, keyphrases, superwords, results):
+    def __init__(self, keyphrases, superwords,badwords, results):
 
         self.results = results
-        super().__init__(keyphrases, superwords, self.result)
+        super().__init__(keyphrases, superwords,badwords, self.result)
 
 
 
@@ -20,4 +20,4 @@ with open('core/skills/phrases.json', encoding='utf-8') as data_file:
     data = json.load(data_file)
 
 for skill in data["skillList"] :
-    TextSkill(skill["keyPhrases"], skill["superWords"], skill["responses"])
+    TextSkill(skill["keyPhrases"], skill["superWords"], skill ["badWords"],skill["responses"])
