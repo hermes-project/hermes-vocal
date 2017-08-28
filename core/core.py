@@ -49,6 +49,7 @@ def computeOrder(order):    # Traitement d'un ordre simple (splité)
     secMaxSimilitudeIndex = scores.index(secMaxSimilitude)
 
     print(scores)
+    print("Yolo")
 
     if (secMaxSimilitude == maxSimilitude):
         print("2 phrases de même similarité !")
