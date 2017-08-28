@@ -1,1 +1,234 @@
-{"skillList": [{"keyPhrases": ["qui es tu", "tu es qui", "qui es tu", "quel est ton nom", "comment t'appelles tu", "comment t'appelle tu", "comment tu t'appelle", "c'est quoi ton nom", "c'est quoi ton petit nom"], "superWords": [], "responses": ["Je suis le robot Hermes, je guide les gens dans le campus !", "Je suis Hermes, un robot avec une intelligence artificielle. Avez-vous besoin d'aide ?", "Je m'appelle Hermes, puis-je vous aider ?"]}, {"keyPhrases": ["bonjour", "salut"], "superWords": ["bonjour", "salut"], "responses": ["bonjour !", "Salutations !", "Bien le bonjour, humain !"]}, {"keyPhrases": ["qui sont tes createurs", "qui est ton createur"], "superWords": ["créateur", "créateurs"], "responses": ["Mes créateurs sont Louis-Baptiste Trailin et Rémi Dulong", "J'ai été créé par Louis-Baptiste Trailin et Rémi Dulong"]}, {"keyPhrases": ["comment ça va", "comment vas tu", "comment va tu", "comment tu vas", "comment tu va", "ça va bien", "tu va bien", "est ce que ça va", "comment tu te porte", "ça va comment", "tout va comme tu veux"], "superWords": [], "responses": ["Je vais bien, merci ! Et vous ?", "Comme sur des roulettes, c'est le cas de le dire ! Et vous ?", "Je sonde mes circuits... c'est bon, tout va bien ! Et vous ?", "À merveille ! Et vous ?", "Je vais bien, merci ! Puis-je vous aider ?", "Comme sur des roulettes, c'est le cas de le dire ! En quoi puis-je vous aider ?"]}, {"keyPhrases": ["ou suis je", "je suis ou", "ou sommes nous"], "superWords": [], "responses": ["Ici, c'est le Forum de Télécom SudParis !", "Nous sommes dans le Forum de l'école !", "Vous êtes dans le Forum, l'endroit central du campus."]}, {"keyPhrases": ["que fais tu", "qu'est-ce que tu fais", "qu'est-ce que tu es en train de faire", "tu fais quoi"], "superWords": [], "responses": ["Je me ballade dans ce magnifique Forum !", "J'aide les personnes qui ont besoin d'être guidées sur le campus.", "Mon travail ! guider les gens qui en ont besoin !", "J'aide les gens, vous avez besoin d'aide ?"]}, {"keyPhrases": ["imite le dalek", "fais le dalek", "connais tu les dalek"], "superWords": ["dalek", "daleks"], "responses": ["Exterminaite ! Exterminaite !"]}, {"keyPhrases": ["je vais bien et toi", "ça va et toi", "tout va bien et toi", "pas terrible et toi", "bof et toi"], "superWords": ["et toi"], "responses": ["Je vais bien, merci de poser la question !", "Tout va bien, merci de demander !"]}, {"keyPhrases": ["je vais bien merci", "je vais bien", "tout va bien merci", "tout va bien", "je me porte bien merci", "je me porte bien", "on fait aller", "ça va merci", "ça va bien merci", "ça va bien"], "superWords": [], "responses": ["Content de l'entendre ! Puis-je vous aider ?", "Ravi de l'entendre ! Avez vous besoin d'aide ?", "Parfait ! En quoi puis-je vous aider ?"]}, {"keyPhrases": ["ça va"], "superWords": [], "responses": ["Très bien !"]}, {"keyPhrases": ["péremptoire", "insipide", "perceval", "paradoxal"], "superWords": ["péremptoire", "insipide", "perceval", "paradoxal"], "responses": ["C'est pas faux"]}, {"keyPhrases": ["mon petit oiseau a pris sa volée"], "superWords": ["petit oiseau volée"], "responses": ["A pris sa, à la volette, a pris sa, à la volette, a pris sa volée."]}, {"keyPhrases": ["Dis moi un conseil"], "superWords": ["dis conseil"], "responses": ["Pour savoir s’il va y avoir du vent, il faut mettre son doigt dans le cul du coq.", "Mettre du beurre dans le fond du plat pour pas que le gratin colle.", "Le caca des pigeons c'est caca, faut pas manger.", "Il faut pas respirer la compote, ça fait tousser."]}, {"keyPhrases": ["Dis moi une blague"], "superWords": ["dis blague"], "responses": ["C'est un Viking, il rencontre un ami Gaulois dans un port. Le Gaulois il lui fait. \"Dis donc toi avec ton casque à corne, présente moi ta femme tu sauras pourquoi tu as des cornes\"", "C'est un aventurier, il se balade dans un donjon à la recherche d'un trésor. Il rencontre un dragon dans une imense salle, il essaye de passer discretement, et là il marche sur le pied du dragon. Et la le dragon lui dit \"Dis donc, tu ne manques pas de toupet\"", "C'est un type qui arrive au chateau, et les gardes ne le laissent pas rentrer, et là le type se met à gueuler \"Et bah Kaamelott on peut dire que ça porte bien son nom\""]}]}
+{
+  "skillList": [
+    {
+      "keyPhrases": [
+        "qui es tu",
+        "tu es qui",
+        "qui es tu",
+        "quel est ton nom",
+        "comment t'appelles tu",
+        "comment t'appelle tu",
+        "comment tu t'appelle",
+        "c'est quoi ton nom",
+        "c'est quoi ton petit nom"
+      ],
+      "superWords": [],
+      "badWords": [],
+      "responses": [
+        "Je suis le robot Hermes, je guide les gens dans le campus !",
+        "Je suis Hermes, un robot avec une intelligence artificielle. Avez-vous besoin d'aide ?",
+        "Je m'appelle Hermes, puis-je vous aider ?"
+      ]
+    },
+    {
+      "keyPhrases": [
+        "bonjour",
+        "salut"
+      ],
+      "superWords": [
+        "bonjour",
+        "salut"
+      ],
+      "badWords": [
+        "bye"
+      ],
+      "responses": [
+        "bonjour !",
+        "Salutations !",
+        "Bien le bonjour, humain !"
+      ]
+    },
+    {
+      "keyPhrases": [
+        "qui sont tes createurs",
+        "qui est ton createur"
+      ],
+      "superWords": [
+        "créateur",
+        "créateurs"
+      ],
+      "badWords": [],
+      "responses": [
+        "Mes créateurs sont Louis-Baptiste Trailin et Rémi Dulong",
+        "J'ai été créé par Louis-Baptiste Trailin et Rémi Dulong"
+      ]
+    },
+    {
+      "keyPhrases": [
+        "comment ça va",
+        "comment vas tu",
+        "comment va tu",
+        "comment tu vas",
+        "comment tu va",
+        "ça va bien",
+        "tu va bien",
+        "est ce que ça va",
+        "comment tu te porte",
+        "ça va comment",
+        "tout va comme tu veux"
+      ],
+      "superWords": [],
+      "badWords": [],
+      "responses": [
+        "Je vais bien, merci ! Et vous ?",
+        "Comme sur des roulettes, c'est le cas de le dire ! Et vous ?",
+        "Je sonde mes circuits... c'est bon, tout va bien ! Et vous ?",
+        "À merveille ! Et vous ?",
+        "Je vais bien, merci ! Puis-je vous aider ?",
+        "Comme sur des roulettes, c'est le cas de le dire ! En quoi puis-je vous aider ?"
+      ]
+    },
+    {
+      "keyPhrases": [
+        "ou suis je",
+        "je suis ou",
+        "ou sommes nous"
+      ],
+      "superWords": [],
+      "badWords": [],
+      "responses": [
+        "Ici, c'est le Forum de Télécom SudParis !",
+        "Nous sommes dans le Forum de l'école !",
+        "Vous êtes dans le Forum, l'endroit central du campus."
+      ]
+    },
+    {
+      "keyPhrases": [
+        "que fais tu",
+        "qu'est-ce que tu fais",
+        "qu'est-ce que tu es en train de faire",
+        "tu fais quoi"
+      ],
+      "superWords": [],
+      "badWords": [],
+      "responses": [
+        "Je me ballade dans ce magnifique Forum !",
+        "J'aide les personnes qui ont besoin d'être guidées sur le campus.",
+        "Mon travail ! guider les gens qui en ont besoin !",
+        "J'aide les gens, vous avez besoin d'aide ?"
+      ]
+    },
+    {
+      "keyPhrases": [
+        "imite le dalek",
+        "fais le dalek",
+        "connais tu les dalek"
+      ],
+      "superWords": [
+        "dalek",
+        "daleks"
+      ],
+      "badWords": [],
+      "responses": [
+        "Exterminaite ! Exterminaite !"
+      ]
+    },
+    {
+      "keyPhrases": [
+        "je vais bien et toi",
+        "ça va et toi",
+        "tout va bien et toi",
+        "pas terrible et toi",
+        "bof et toi"
+      ],
+      "superWords": [
+        "et toi"
+      ],
+      "badWords": [],
+      "responses": [
+        "Je vais bien, merci de poser la question !",
+        "Tout va bien, merci de demander !"
+      ]
+    },
+    {
+      "keyPhrases": [
+        "je vais bien merci",
+        "je vais bien",
+        "tout va bien merci",
+        "tout va bien",
+        "je me porte bien merci",
+        "je me porte bien",
+        "on fait aller",
+        "ça va merci",
+        "ça va bien merci",
+        "ça va bien"
+      ],
+      "superWords": [],
+      "badWords": [],
+      "responses": [
+        "Content de l'entendre ! Puis-je vous aider ?",
+        "Ravi de l'entendre ! Avez vous besoin d'aide ?",
+        "Parfait ! En quoi puis-je vous aider ?"
+      ]
+    },
+    {
+      "keyPhrases": [
+        "ça va"
+      ],
+      "superWords": [],
+      "badWords": [],
+      "responses": [
+        "Très bien !"
+      ]
+    },
+    {
+      "keyPhrases": [
+        "péremptoire",
+        "insipide",
+        "perceval",
+        "paradoxal"
+      ],
+      "superWords": [
+        "péremptoire",
+        "insipide",
+        "perceval",
+        "paradoxal"
+      ],
+      "badWords": [],
+      "responses": [
+        "C'est pas faux"
+      ]
+    },
+    {
+      "keyPhrases": [
+        "mon petit oiseau a pris sa volée"
+      ],
+      "superWords": [
+        "petit oiseau volée"
+      ],
+      "badWords": [],
+      "responses": [
+        "A pris sa, à la volette, a pris sa, à la volette, a pris sa volée."
+      ]
+    },
+    {
+      "keyPhrases": [
+        "Dis moi un conseil"
+      ],
+      "superWords": [
+        "dis conseil"
+      ],
+      "badWords": [],
+      "responses": [
+        "Pour savoir s’il va y avoir du vent, il faut mettre son doigt dans le cul du coq.",
+        "Mettre du beurre dans le fond du plat pour pas que le gratin colle.",
+        "Le caca des pigeons c'est caca, faut pas manger.",
+        "Il faut pas respirer la compote, ça fait tousser."
+      ]
+    },
+    {
+      "keyPhrases": [
+        "Dis moi une blague"
+      ],
+      "superWords": [
+        "dis blague"
+      ],
+      "badWords": [],
+      "responses": [
+        "C'est un Viking, il rencontre un ami Gaulois dans un port. Le Gaulois il lui fait. \"Dis donc toi avec ton casque à corne, présente moi ta femme tu sauras pourquoi tu as des cornes\"",
+        "C'est un aventurier, il se balade dans un donjon à la recherche d'un trésor. Il rencontre un dragon dans une imense salle, il essaye de passer discretement, et là il marche sur le pied du dragon. Et la le dragon lui dit \"Dis donc, tu ne manques pas de toupet\"",
+        "C'est un type qui arrive au chateau, et les gardes ne le laissent pas rentrer, et là le type se met à gueuler \"Et bah Kaamelott on peut dire que ça porte bien son nom\""
+      ]
+    }
+  ]
+}
