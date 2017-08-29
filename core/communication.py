@@ -1,5 +1,6 @@
 import json
 from core.utils.cleanString import cleanString
+import core.utils.client as globalclient
 
 yesWords = ["oui", "d'accord", "d accord", "ok", "ça marche", "pourquoi pas", "bien sur"]
 noWords = ["non", "pas du tout", "hors de question", "pas question", "impossible", "je refuse"]
@@ -10,24 +11,23 @@ def sendAnswer(answer, client):
     client.send(str.encode(jsonMsg))
 
 
-def askConfirmation(confirmMessage, client):
-    msg = {"type": "askConfirmation", "msg": confirmMessage}
+def askConfirmation(confirmMessage, originalRequest, client):
+    msg = {"type": "askConfirmation", "msg": confirmMessage, "originalRequest": originalRequest}
     jsonMsg = json.dumps(msg)
     client.send(str.encode(jsonMsg))
-    conf = recvFromClient(client)
-    if conf["type"] == "confirmation":
-        for word in noWords:
-            if word in cleanString(conf["msg"]):
-                return False
-        for word in yesWords:
-            if word in cleanString(conf["msg"]):
-                return True
-        return False
-    #TODO: renvoyer l'ordre normal dans le core
-    return False # en attendant
 
+def isConfirmation(str):
+    for word in noWords:
+        if word in cleanString(str):
+            return False
+    for word in yesWords:
+        if word in cleanString(str):
+            return True
+    return False
 
 def recvFromClient(client):
     rawOrder = client.recv(1024).decode('utf-8')
     print(rawOrder)
-    return json.loads(rawOrder)
+    orderJson = json.loads(rawOrder)
+    globalclient.currentJson = orderJson  # On met à jour la variable globale contenant le JSON actuellement traité
+    return orderJson

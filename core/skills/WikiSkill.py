@@ -37,11 +37,16 @@ def response(order):
         phrase = cleanString(phrase)
         if phrase in order:
             order = re.sub(phrase, '', order)
-            if askConfirmation("Voulez vous que je recherche "+order+" sur Wikipédia ?", clientglobal.client):
-                wikipedia.set_lang("fr")
-                return wikipedia.summary(order, sentences=1)
+
+            if globalclient.currentJson["type"] == "confirmation": # Si l'ordre est déjà une confirmation :
+                if isConfirmation(globalclient.currentJson["answer"]): # On vérifie si la personne a dit "oui" ou "non"
+                    wikipedia.set_lang("fr")
+                    return wikipedia.summary(order, sentences=1)
+                else:
+                    return ("Dommage ! j'en étais capable...")
             else:
-                return("Dommage ! j'en étais capable...")
+                askConfirmation("Voulez vous que je recherche "+order+" sur Wikipédia ?", clientglobal.currentJson["msg"], clientglobal.client)
+
     return("Je n'ai pas compris ce que vous voulez savoir")
 
 ArgSkill(phrases, words,badwords, response)
