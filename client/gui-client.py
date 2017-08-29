@@ -9,13 +9,20 @@ root = Tk()
 
 def submitCallback():
     request = requestBox.get()
-    printRequest(request)
-    askServer(request)
+    if request != "":
+        requestBox.delete(0, END)
+        printRequest(request)
+        askServer(request)
 
 
 conversation = Text(root, width=50, height=40)
 requestBox = Entry(root, width=40)
 submitButton = Button(root, text="Submit", command=submitCallback)
+
+def returnCallback(event):
+    submitCallback()
+
+root.bind('<Return>', returnCallback)
 
 conversation.tag_add("request", END)
 conversation.tag_add("robot", END)
