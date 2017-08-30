@@ -37,7 +37,7 @@ while(42):
 
     if(ret!="") :
         logBold("Response : "+ret)
-    sendAnswer(ret, clientglobal.client)
+        sendAnswer(ret, clientglobal.client)
 
     print("Close")
     clientglobal.client.close()
