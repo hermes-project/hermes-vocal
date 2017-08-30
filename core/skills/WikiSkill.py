@@ -43,7 +43,7 @@ def response(order):
                 if isConfirmation(globalclient.currentJson["answer"]): # On vérifie si la personne a dit "oui" ou "non"
                     wikipedia.set_lang("fr")
                     search = wikipedia.summary(order, sentences=1)
-                    if len(search) < 40 :
+                    if len(search) < 40 : # Pour avoir une longueur de résultat non ridicule
                         return wikipedia.summary(order, sentences=2)
                     else:
                         return search

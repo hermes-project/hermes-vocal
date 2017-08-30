@@ -162,6 +162,7 @@ def load():
 
 load()
 
+intro.pack(side=BOTTOM)
 
 
 root.mainloop()
