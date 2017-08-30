@@ -6,6 +6,7 @@ from core.skills.ArgSkill import ArgSkill
 from core.utils.cleanString import cleanString
 from core.communication import *
 import core.utils.client as clientglobal
+from core.utils.logs import *
 
 phrases = [
     "parle moi de",
@@ -46,6 +47,7 @@ def response(order):
                     return ("Dommage ! j'en étais capable...")
             else:
                 askConfirmation("Voulez vous que je recherche "+order+" sur Wikipédia ?", clientglobal.currentJson["msg"], clientglobal.client)
+                logBold("Response : " + "Voulez vous que je recherche "+order+" sur Wikipédia ?")
                 return ""
 
 ArgSkill(phrases, words,badwords, response)

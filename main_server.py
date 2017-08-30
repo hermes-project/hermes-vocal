@@ -35,7 +35,8 @@ while(42):
 
     ret = core.executeSkill(order["msg"].lower())
 
-    logBold("Response : "+ret)
+    if(ret!="") :
+        logBold("Response : "+ret)
     sendAnswer(ret, clientglobal.client)
 
     print("Close")
