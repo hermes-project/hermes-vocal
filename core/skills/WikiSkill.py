@@ -42,7 +42,11 @@ def response(order):
             if globalclient.currentJson["type"] == "confirmation": # Si l'ordre est déjà une confirmation :
                 if isConfirmation(globalclient.currentJson["answer"]): # On vérifie si la personne a dit "oui" ou "non"
                     wikipedia.set_lang("fr")
-                    return wikipedia.summary(order, sentences=1)
+                    search = wikipedia.summary(order, sentences=1)
+                    if len(search) < 40 :
+                        return wikipedia.summary(order, sentences=2)
+                    else:
+                        return search
                 else:
                     return ("Dommage ! j'en étais capable...")
             else:
