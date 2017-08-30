@@ -46,7 +46,6 @@ def response(order):
                     return ("Dommage ! j'en étais capable...")
             else:
                 askConfirmation("Voulez vous que je recherche "+order+" sur Wikipédia ?", clientglobal.currentJson["msg"], clientglobal.client)
-
-    return("Je n'ai pas compris ce que vous voulez savoir")
+                return ""
 
 ArgSkill(phrases, words,badwords, response)
