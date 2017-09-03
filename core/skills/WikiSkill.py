@@ -3,9 +3,7 @@
 import re
 import wikipedia
 from core.skills.ArgSkill import ArgSkill
-from core.utils.cleanString import cleanString
 from core.communication import *
-import core.utils.client as clientglobal
 from core.utils.logs import *
 
 phrases = [
@@ -31,16 +29,16 @@ badwords = [
 
 ]
 
-def response(order):
+def response(orderJson):
 
-    order = cleanString(order)
+    order = orderJson["msg"]
     for phrase in phrases:
         phrase = cleanString(phrase)
         if phrase in order:
             order = re.sub(phrase, '', order)
 
-            if globalclient.currentJson["type"] == "confirmation": # Si l'ordre est déjà une confirmation :
-                if isConfirmation(globalclient.currentJson["answer"]): # On vérifie si la personne a dit "oui" ou "non"
+            if orderJson["type"] == "confirmation": # Si l'ordre est déjà une confirmation :
+                if isConfirmation(orderJson["answer"]): # On vérifie si la personne a dit "oui" ou "non"
                     wikipedia.set_lang("fr")
                     search = wikipedia.summary(order, sentences=1)
                     if len(search) < 40 : # Pour avoir une longueur de résultat non ridicule
@@ -50,7 +48,7 @@ def response(order):
                 else:
                     return ("Dommage ! j'en étais capable...")
             else:
-                askConfirmation("Voulez vous que je recherche "+order+" sur Wikipédia ?", clientglobal.currentJson["msg"], clientglobal.client)
+                askConfirmation("Voulez vous que je recherche "+order+" sur Wikipédia ?", orderJson["msg"], orderJson["client"])
                 logBold("Response : " + "Voulez vous que je recherche "+order+" sur Wikipédia ?")
                 return ""
 

@@ -2,9 +2,9 @@
 import socket
 import json
 from core.utils.logs import *
+from core.utils.cleanOrder import *
 from core import core
 from core.communication import *
-import core.utils.client as clientglobal
 
 socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 socket.bind(('', 15555))
@@ -18,29 +18,32 @@ while(42):
     logUnderline("--- Attente de requête ---")
 
     socket.listen(5)
-    clientglobal.client, address = socket.accept()
+    client, address = socket.accept()
 
     logGreen("Client connecté...\n")
 
 
-    order = recvFromClient(clientglobal.client)
+    orderJson = recvFromClient(client)
 
-    if (order["type"] == "question" or order["type"] == "confirmation"):
-        print("Reçu ordre de type "+order["type"])
+    if (orderJson["type"] == "question" or orderJson["type"] == "confirmation"):
+        print("Reçu ordre de type "+orderJson["type"])
     else:
-        print ("ORDRE DE TYPE NON RECONNU : "+order)
+        print ("ORDRE DE TYPE NON RECONNU : "+orderJson)
 
     print("Request : ")
-    logBlue(order["msg"])
+    logBlue(orderJson["msg"])
 
-    ret = core.executeSkill(order["msg"].lower())
+    orderJson["client"] = client
+    orderJson = cleanOrder(orderJson)
+
+    ret = core.executeSkill(orderJson) #TODO tout transformer en JSON !!!
 
     if(ret!="") :
         logBold("Response : "+ret)
-        sendAnswer(ret, clientglobal.client)
+        sendAnswer(ret, client)
 
     print("Close")
-    clientglobal.client.close()
+    client.close()
 
     print("\n--------------\n")
 

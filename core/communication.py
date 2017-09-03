@@ -1,6 +1,5 @@
 import json
-from core.utils.cleanString import cleanString
-import core.utils.client as globalclient
+from core.utils.cleanOrder import cleanString
 
 yesWords = ["oui", "d'accord", "d accord", "ok", "ça marche", "pourquoi pas", "bien sur"]
 noWords = ["non", "pas du tout", "hors de question", "pas question", "impossible", "je refuse"]
@@ -29,5 +28,4 @@ def recvFromClient(client):
     rawOrder = client.recv(1024).decode('utf-8')
     print(rawOrder)
     orderJson = json.loads(rawOrder)
-    globalclient.currentJson = orderJson  # On met à jour la variable globale contenant le JSON actuellement traité
     return orderJson

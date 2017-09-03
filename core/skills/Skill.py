@@ -1,6 +1,6 @@
 import random
 from core.skills.skillsLoader import SkillsList
-from core.utils.cleanString import *
+from core.utils.cleanOrder import *
 
 
 class Skill:

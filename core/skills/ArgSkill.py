@@ -11,8 +11,8 @@ class ArgSkill(Skill):
                 return True
         return False
 
-    def execute(self, order):
-        return self.result(order)
+    def execute(self, orderJson):
+        return self.result(orderJson)
 
     def __init__(self, keyphrases, superwords,badwords, result):
         super().__init__(keyphrases, superwords,badwords, result)

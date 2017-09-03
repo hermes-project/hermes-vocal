@@ -1,6 +1,3 @@
-from pprint import pprint
-import random
-
 SkillsList = []
 
 def randomAnswer(answers):
