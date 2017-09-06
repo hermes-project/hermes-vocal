@@ -11,6 +11,8 @@ def sendQuestion(question, socket):
     jsonMsg = json.dumps(msg)
     socket.send(str.encode(jsonMsg))
 
+
+
 def sendConfirmation(confirmation, socket):
     msg = {"type": "confirmation", "msg": confirmation}
     jsonMsg = json.dumps(msg)
@@ -28,14 +30,22 @@ while True:
         sendQuestion(request, socket)               # Envoi de la première requête
         #socket.send(str.encode(request))
         rawRet = socket.recv(1024).decode()
-        ret = json.loads(rawRet)
-        while(ret["type"]=="askConfirmation"):     # Tant que le serveur demande des précisions
-            logGreen(ret["msg"]+"\n")
-            resp = input("Réponse : ")
-            sendConfirmation(resp, socket)
-            rawRet = socket.recv(1024).decode()
+        if(rawRet) :
             ret = json.loads(rawRet)
+            while(ret["type"]=="askConfirmation"):     # Tant que le serveur demande des précisions
+                logGreen(ret["msg"]+"\n")
+                resp = input("Réponse : ")
+                sendConfirmation(resp, socket)
+                rawRet = socket.recv(1024).decode()
+                ret = json.loads(rawRet)
 
-        logGreen(ret["msg"])                        # Fin de la requête, fermeture socket
+            if(ret["type"] == "ERROR") :
+                logFail(ret["msg"])
+            else :
+                logGreen(ret["msg"])                        # Fin de la requête, fermeture socket
 
-        socket.close()
+            socket.close()
+        else :
+            logFail("Pas de réponse du serveur")
+            socket.close()
+

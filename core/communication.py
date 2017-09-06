@@ -9,6 +9,11 @@ def sendAnswer(answer, client):
     jsonMsg = json.dumps(msg)
     client.send(str.encode(jsonMsg))
 
+def sendError(answer, client):
+    msg = { "type": "ERROR", "msg": answer }
+    jsonMsg = json.dumps(msg)
+    client.send(str.encode(jsonMsg))
+
 
 def askConfirmation(confirmMessage, originalRequest, client):
     msg = {"type": "askConfirmation", "msg": confirmMessage, "originalRequest": originalRequest}
@@ -27,5 +32,10 @@ def isConfirmation(str):
 def recvFromClient(client):
     rawOrder = client.recv(1024).decode('utf-8')
     print(rawOrder)
+
     orderJson = json.loads(rawOrder)
+
+    if(orderJson == "") :
+        raise ValueError("Json Vide")
+
     return orderJson

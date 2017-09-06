@@ -8,6 +8,8 @@ from core.utils.cleanOrder import *
 def executeSkill(orderJson):  # Traitement d'un ordre (complexe)
 
     order = orderJson["msg"]
+    if(order == "") :
+        return "Je ne vous ai pas entendu"
     orders = order.split(",")  # On regarde si on peut séparer l'ordre en 2 (si il y a une virgule)
     returns = []
     if len(orders) > 1: # Ordre multiple

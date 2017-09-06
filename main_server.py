@@ -22,28 +22,50 @@ while(42):
 
     logGreen("Client connecté...\n")
 
+    try :
+        orderJson = recvFromClient(client)
 
-    orderJson = recvFromClient(client)
+        if (orderJson["type"] == "question" or orderJson["type"] == "confirmation"):
+            print("Reçu ordre de type " + orderJson["type"])
+            print("Request : ")
+            logBlue(orderJson["msg"])
 
-    if (orderJson["type"] == "question" or orderJson["type"] == "confirmation"):
-        print("Reçu ordre de type "+orderJson["type"])
-    else:
-        print ("ORDRE DE TYPE NON RECONNU : "+orderJson)
+            orderJson["client"] = client
+            orderJson = cleanOrder(orderJson)
 
-    print("Request : ")
-    logBlue(orderJson["msg"])
+            ret = core.executeSkill(orderJson)  # TODO tout transformer en JSON !!!
 
-    orderJson["client"] = client
-    orderJson = cleanOrder(orderJson)
+            if (ret != ""):
+                logBold("Response : " + ret)
+                sendAnswer(ret, client)
 
-    ret = core.executeSkill(orderJson) #TODO tout transformer en JSON !!!
+            print("Close")
+            client.close()
+        else:
+            print("ORDRE DE TYPE NON RECONNU : " + str(orderJson))
+            ret = "ERREUR : Le message envoyé au serveur n'est pas un bon Json"
+            logFail("Response : " + ret)
+            sendError(ret, client)
+            print("Close")
+            client.close()
 
-    if(ret!="") :
-        logBold("Response : "+ret)
-        sendAnswer(ret, client)
 
-    print("Close")
-    client.close()
+    except KeyError:
+        ret = "ERREUR : Le message envoyé au serveur n'est pas un bon Json"
+        logFail("Response : " + ret)
+        sendError(ret, client)
+        print("Close")
+        client.close()
+    except ValueError :
+        ret = "ERREUR : Le message envoyé au serveur n'est pas un Json"
+        logFail("Response : " + ret)
+        sendError(ret, client)
+        print("Close")
+        client.close()
+
+
+
+
 
     print("\n--------------\n")
 
