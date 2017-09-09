@@ -123,7 +123,7 @@ Button(intro, text="New Skill", command=newSkill).pack()
 
 intro.pack(side=TOP)
 
-with open('core/skills/phrases.json', encoding='utf-8') as data_file:
+with open('../core/skills/phrases.json', encoding='utf-8') as data_file:
     data = json.load(data_file)
 
 
@@ -166,4 +166,3 @@ intro.pack(side=BOTTOM)
 
 
 root.mainloop()
-

@@ -1,0 +1,167 @@
+\documentclass[a4paper,10pt]{report}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{textcomp}
+\usepackage[french]{babel}
+\usepackage{hyperref}
+\usepackage{wrapfig}
+
+
+% Title Page
+\title{Rapport de stage : Projet Hermes-Vocal}
+\author{Rémi Dulong - Louis-Baptiste Trailin\and{Tuteur : Mostafa Bellafkih}}
+\date{Juin - Septembre 2017}
+
+
+\begin{document}
+    \maketitle
+    \newpage
+    
+    \begin{abstract}
+        {Ce rapport est le résultat d'un stage de 3 mois à L'institut National des Postes et Télécom de Rabat, dont l'objectif était de réaliser un programme d'assistant vocal personnalisable, dans le but de l'intégrer à un robot. Nous avons donc commencé par faire un état de l'art de ce genre de technologies, puis nous avons mis en pratique ce que nous avons appris afin d'aboutir à un programme répondant à nos contraintes. La totalité de notre travail a été pensée pour fonctionner sur des distributions GNU/Linux et sur Android.}
+    \end{abstract}
+    
+    \tableofcontents
+    \newpage
+    
+    \chapter{Objectif du stage}
+    
+    \section{Le projet Hermes}
+    
+    {Le stage que nous avons réalisé s'inscrit dans le cadre du développement d'un robot qu'une équipe de 6 étudiants de Télécom SudParis a conçu lors de l'année scolaire
+        2016-2017 dans le cadre des projets Cassiopée. Il s'agit d'un robot roulant qui aurait pour objectif de guider les personnes qui en ont besoin au sein du campus de 
+        Télécom SudParis. Pour cela, le robot Hermes doit être capable de se déplacer mais aussi de communiquer avec l'utilisateur ayant besoin d'être guidé. Nous avons 
+        déjà réalisé (au moins partiellement) la partie de ce projet qui consistait à créer le robot et assurer ses déplacements. Cependant, il restait à trouver le meilleur 
+        moyen de communication entre le robot et ses utilisateurs : c'est pour cela que nous avons pensé à un système de communication orale, sans encore savoir, à ce 
+        moment là, comment nous allions y parvenir.}
+    {Ce robot est équippé d'un ordinateur central embarqué qui peut être une Raspberry Pi ou une Beaglebone Black fonctionnant sur une distribution Linux minimaliste customisée. Il embarque également une tablette sous Android afin d'assurer l'interaction avec les utilisateurs.}
+    
+    \section{Sujet du stage}
+    
+    {Après réflexion avec notre tuteur de stage, nous avons abouti au sujet de stage suivant :}
+    
+    {Dans le contexte plus vaste de l'étude d'un robot déambulatoire pour
+        Télécom SudParis, on souhaite doter celui-ci d'éléments d'interaction
+        homme-machine permettant la reconnaissance et la compréhension de
+        requêtes parlées ou écrites d'une part, et la synthèse de réponses
+        d'autre part.}
+    {L'étude d'un tel système s'appuiera sur une étude approfondie de l'état
+        de l'art du domaine, cette étape permettant d'orienter la phase de
+        conception. Un des aspects essentiels est la conception d'un modèle pouvant servir tant à
+        représenter les requêtes qu'à élaborer les réponses. L'étude s'attachera
+        à fournir un prototype implémentant et validant ces concepts.
+        L'intégration de ce système au sein du robot déambulatoire fera en outre
+        l'objet d'une étude particulière, compte tenu des limitations des
+        calculateurs embarqués. Ainsi il sera éventualisé la délocalisation du
+        système sur un serveur distant.}
+    
+    
+    \chapter{Etat de l'art}
+    \section{Les assistants vocaux existants}
+    {Aujourd'hui, il existe deux grands types d'assistants vocaux : les projets propriétaires et les projets Open Source. Voici
+        les exemples les plus pertinents que nous avons étudié :}
+    \subsection{Siri, OK Google, Cortana...}
+    {Récemment, nous avons vu apparaître plusieurs assistants vocaux créés par les géants que sont Apple, Google et Microsoft. 
+        Ces assistants vocaux peuvent s'avérer très pratiques, et nous montrent bien que les technologies de compréhension et de 
+        synthèse vocale sont assez développées pour l'utilisation que nous souhaitons. En effet, après quelques tests, on remarque 
+        que la qualité de la transcription de la parole en texte (Speech To Text) est très satisfaisante, ce qui est indispensable pour
+        créer un générateur de réponses fiable.}
+    {Cependant, nous ne pouvions utiliser aucun de ces assistants existants, parce qu'ils ne sont pas du tout personnalisables, 
+        nécessitent une connexion internet, et ne peuvent pas réellement être utilisées pour un système embarqué. Ils restent néanmoins 
+        des preuves du fonctionnement de ce genre de technologies, et nous ont inspiré pour la création de notre propre système.}
+    
+    \subsection{Mycroft}
+    {Après quelques recherches sur les assistants existants, nous sommes tombés sur le projet Mycroft. Il s'agit d'un projet d'assistant 
+        Open Source, prévu pour fonctionner sur Raspberry Pi (donc parfaitement adapté à un système embarqué). L'assistant est complètement 
+        personnalisable, et les développeurs encouragent les contributeurs qui peuvent ajouter des capacités (appelées "Skills") à l'assistant,
+        c'est à dire des capacités à répondre à des questions. De plus, la communauté francophone est encore assez peu représentée dans ce projet,
+        il y a donc de nombreux Skills basiques de Mycroft qui ne demandent qu'à être traduits pour fonctionner également en Français.}
+    {Nous avons passé un bon moment à étudier le fonctionnement de Mycroft, à essayer de tester sa modularité et sa personnalisabilité. 
+        Nous avons notamment essayé de l'utiliser en français, en changeant les paramètres des programmes de compréhension de parole (STT) 
+        et de synthèse vocale (TTS).}
+    {Ce projet est très prometteur, et nous aurions pu l'utiliser comme base pour développer notre système, en ajoutant tout simplement les 
+        "Skills" nécessaires pour envoyer des ordres au robot Hermes. Cependant, nous avons choisi de procéder différemment, comme nous 
+        l'expliquerons dans la \autoref{sec:realisation}}
+    \section{Compréhension et synthèse vocale (STT et TTS)}
+    {Dans cette partie, nous parlerons des programmes de STT et de TTS.}
+    {Le STT (Speech To Text) est un programme capable de convertir un enregistrement de voix en une chaîne de caractères afin de permettre
+        son interprétation. Ces logiciels utilisent des dictionnaires de mots connus et leur décomposition en phonèmes (ce qui revient à de l'étude de syllabes) 
+        correspondante. Le fichier sonore est traité afin de décomposer le fichier en phonèmes selon un modèle, et cherche la correspondance la plus probable dans le
+        dictionnaire. Ce programme peut utiliser des réseaux de neurones.}
+    {Le TTS (Text To Speech) fait le travail inverse : il permet de faire de la synthèse vocale, afin de répondre à l'utilisateur à l'oral.
+        Le programme génère un fichier de son à partir d'une chaîne de caractères. Il utilise pour cela un modèle (réalisé à partir de chaînes de 
+        Markov et de réseaux de neurones) afin d'associer la bonne prononciation à chaque mot.}
+    {\newline Cependant, le dictionnaire, le modèle de décomposition en phonèmes et le modèle de synthèse vocale dépendent de la langue que l'on utilise. 
+        Et malheureusement pour nous les francophones, les modèles les plus aboutis sont en Anglais. Les modèles de compréhension du français le sont beaucoup 
+        moins, à l'exception de certaines API propriétaires.}
+    \subsection{Les API en ligne}
+    {Il existe plusieurs API en ligne très performantes. C'est le cas de l'API de Google, mais également de celle de Mycroft. Leur défaut principal est
+        de nécessiter une connexion internet permanente pour fonctionner, ce qui est un problème pour notre système. En effet, notre robot aura normalement 
+        une connexion Internet via Wi-Fi dans le Forum (l'Accueil de Télécom SudParis) mais pourrait potentiellement sortir de cet endroit pour aller dans 
+        d'autres zones du campus. Il faudrait, dans ce cas, que la reconaissance vocale fonctionne également. Nous devions donc choisir un système pouvant
+        fonctionner hors ligne.}
+    \subsection{Les programmes hors-ligne}
+    {Nous avons donc cherché des programmes équivalents fonctionnant sans connexion Internet. Nous nous sommes donc penchés sur les deux logiciels que 
+        sont Espeak et PocketSphinx.}
+    {Espeak est un TTS Open Source, qui permet donc d'utiliser une voix synthétisée à partir d'une phrase qu'on lui fournit. Si ses résultats sont 
+        indéniables en Anglais, il faut avouer qu'en Français, la voix générée par défaut est si "robotique" que l'on peine à la comprendre. Il existe un
+        logiciel complémentaire appelé MBrola qui permet d'utiliser d'autres voix plus réalistes, mais cela reste assez peu intelligible.}
+    {PocketSphinx est un STT Open Source également, qui permet donc de générer du texte à partir du son d'une voix. Après avoir fait quelques tests, 
+        en installant péniblement les modèles et dictionnaires français, nous en sommes arrivé à la conclusion que ce programme, relativement efficace en Anglais,
+        est très complexe à utiliser en Français encore aujourd'hui. Le programme n'arrêtait pas de reconnaître des mots que nous n'avions pas prononcé, ce qui 
+        aurait été très difficile à interpreter par la suite.}
+    {La seule solution restante était d'utiliser l'application de Google intégrée dans Android, qui permet d'utiliser la reconnaissance et la synthèse vocale
+        sur un téléphone ou une tablette. La contrainte d'intégrer une tablette au robot n'étant pas un problème (puisqu'il était prévu d'en placer une dans tous les cas).
+        C'est un programme quasiment aussi précis dans la reconnaissance que l'API en ligne de Google, et avec la même synthèse vocale (elle utilise la même voix que pour
+        Google Traduction). Le seul inconvénient étant que le programme sur tablette doit communiquer avec l'ordinateur central du robot, puisqu'on ne pourra pas gérer la reconnaissance et la synthèse vocale directement au niveau de cet ordinateur central.}
+    \section{Compréhension du langage et génération de réponses}
+    {En ce qui concerne la compréhension des requêtes et la génération de réponses associées, nous n'avons eu accès qu'au code de Mycroft, puisqu'il est le seul des projets précédents à être Open Source. Ainsi, nous avons pu analyser que Mycroft fonctionne de manière modulaire, avec des "Skills" qui sont tout simplement des correspondances entre une requête et sa réponse, ou le code qui doit être executé. Il s'agit d'un modèle dit "rule-based", en opposition avec les modèles plus complexes qui utilisent notamment des réseaux de neurones. Cela signifie tout simplement que l'on utilise une liste de requêtes connues et de leur réponse associée pour comparer chaque requête à ce que l'on connaît afin de vérifier si on peut répondre.}
+    {\newline Il est très probable que les modèles utilisés par Google, Cortana et Siri soient plutôt des modèles basés sur des réseaux de neurones permettant la compréhension du langage naturel. Il s'agit de la technique la plus avancée afin d'interpréter les requêtes, car elle permet de répondre à des requêtes qui ne sont pas définies de manière absolue. Une légère modification dans la requête peut donner le bon résultat, ce qui donne une bien plus grande flexibilité au système. Cependant, cette technique demande de réaliser et d'entrainer des réseaux de neurones complexes, ce qui demande à la fois une grande quantité de calculs, une base de données de requêtes et de réponses associées énorme afin de faire l'apprentissage du réseau de neurones, et la maîtrise des concepts de réseaux de neurones que nous n'avons pas pour l'instant.}
+    
+    \chapter{Réalisation finale}
+    \label{sec:realisation}
+    {Après avoir fait un état de l'art des assistants vocaux proche de ce que nous souhaitions, nous avons pu nous consacrer à la réalisation de notre propre programme, adapté au mieux à nos besoins. Nous avons donc choisi les technologies suivantes :}
+    \section{STT et TTS}
+    {Tout d'abord, la seule solution potentiellement utilisable dans notre système semblait être PocketSphinx. Cependant, au vu des résultats que nous obtenions en l'utilisant en Français, nous avons choisi d'utiliser l'API hors ligne de Google installée nativement sur toutes les tablettes et téléphones Android. \newline}
+    {Ce choix a donc conditionné l'architecture de notre système, qui a dû être pensé en Client - Serveur. Le client sera une application Android, et le serveur un programme en python. Les deux communiqueront à travers le réseau via un socket.}
+    \section{Compréhension et génération de réponses}
+    {N'ayant que trop peu de connaissances sur les réseaux de neurones, et un cahier des charges pouvant être respecté grâce à un modèle "rule-based", nous avons réalisé notre programme Serveur en suivant une architecture proche de celle de Mycroft, codé en Python 3.}
+    \subsection{Les "Skills"}
+    {Afin de rendre l'assistant très modulaire et ainsi simplifier la gestion des phrases auxquelles il sait répondre, nous avons gardé le concept de "Skills" du projet Mycroft. Un Skill est tout simplement un morceau de code que l'on peut importer dans le coeur du programme serveur, afin d'ajouter des phrases au dictionnaire de requêtes connues et leur associer une fonction de réponse.}
+    \subsubsection{La classe Skill}
+    {Notre programme étant orienté objet, nous avons créé des classes possédant les spécifications suivantes :\newline\newline}
+    \begin{figure}
+        \centering
+        \includegraphics[width=3cm]{skill.png}
+    \end{figure}
+    {Les attributs :}
+    \begin{itemize}
+        \item \textbf{keyPhrases} : la liste des phrases exactes connues. Par exemple, ["Quelle heure est-il ?", "Il est quelle heure ?"]
+        \item \textbf{superWords} : Liste de mots ou motifs de mots clés permettant d'interpréter une phrase qui n'est pas dans keyPhrases. Dans notre exemple, ["heure", "quelle heure"]
+        \item \textbf{badWords} : Liste "anti mots clés", contient des mots ou motifs qui nous montrent qu'il ne faut pas interpréter la phrase. Dans notre exemple, ["à quelle heure"]
+        \item \textbf{result} : C'est la fonction à exécuter si la requête est confirmée comme étant un appel à ce skill. Dans notre exemple, il s'agit d'une fonction qui demandera l'heure au système d'exploitation, et la renverra sous la forme d'une chaîne de caractères telle que "Il est XX heures et XX minutes".
+        \item \textbf{keyWords} \textit{(attribut dérivé)} : Il s'agit d'un dictionnaire des mots contenus dans les keyPhrases. il est généré à la construction de l'objet en décomposant chaque keyPhrase. Pour notre exemple, il vaudra ["quelle", "heure", "est", "il"] (on retire les mots en doublon)\newline
+    \end{itemize}
+    {Les méthodes :}
+    \begin{itemize}
+        \item \textbf{ask} : Méthode qui prend en argument la requête, et qui vérifie si la question posée par l'utilisateur est dans les keyPhrases. Renvoie un booléen.
+        \item \textbf{similitude} : Méthode qui prend en argument la requête, et qui attribue à la requête un score en fonction de la "similitude" avec les keyPhrases, la présence de superWords ou de badWords. Les paramètres du calcul sont modifiables, par exemple, on a choisi d'attribuer +1 au score pour chaque keyWord présent dans la requête, +20 pour un superWord, et -40 pour un badWord. La fonction renvoie dont un entier représentant le score de similitude.
+        \item \textbf{execute} : Méthode qui execute le Skill lorsqu'il est confirmé (c'est à dire qu'il appelle la fonction fournie pour result)
+    \end{itemize}
+    
+    \subsection{Le package core}
+    
+    \subsection{Le protocole de communication Client-Serveur}
+    JSON
+    
+    \section{Les interfaces utilisateur}
+    
+    \subsection{L'application Android}
+    
+    \subsection{Le programme Python}
+    
+    \subsection{Le SkillEditor}
+    
+    \chapter{Conclusion}
+    
+\end{document}          
