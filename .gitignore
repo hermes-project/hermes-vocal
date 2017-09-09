@@ -6,6 +6,6 @@ goog.mp3
 good.mp3
 core/skills/phrasesWithBW.json
 .directory
-rapport
-rapport/!.pdf
-rapport/!.tex
+rapport/*
+rapport/!*.pdf
+rapport/!*.tex
