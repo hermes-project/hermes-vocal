@@ -9,3 +9,4 @@ core/skills/phrasesWithBW.json
 rapport/*
 rapport/!*.pdf
 rapport/!*.tex
+rapport/!*.png

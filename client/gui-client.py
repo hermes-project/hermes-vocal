@@ -91,6 +91,8 @@ def askServer(request):
         if (ret["type"] == "askConfirmation"):  # Si le serveur demande des précisions
             printRobot(ret["msg"] + "\n")
             askConfirmation = True
+        elif (ret["type"] == "ERROR"):
+            printError(ret["msg"])
         else:
             printRobot(ret["msg"])  # Fin de la requête, fermeture socket
 

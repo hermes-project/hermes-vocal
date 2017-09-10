@@ -4,7 +4,7 @@
 \usepackage{textcomp}
 \usepackage[french]{babel}
 \usepackage{hyperref}
-\usepackage{wrapfig}
+\usepackage{minted}
 
 
 % Title Page
@@ -173,16 +173,122 @@
         {Si ces trois conditions sont validées, alors l'algorithme déterminera qu'il est très probable que la requête de l'utilisateur corresponde à ce à quoi le Skill peut répondre, et lancera son éxécution. Nous avons essayé différentes valeurs pour les seuils arbitraires ainsi que pour les points que rapportent les mots clés et anti mots clés, afin de trouver un compromis intéressant qui est capable de répondre à une requête dont la forme est inconnue du système au préalable.}
 
       \subsection{Le protocole de communication Client-Serveur}
-      JSON
+
+      {Comme nous avons choisi une architecture Client - Serveur, nous devions également prévoir un protocole de communication entre les deux programmes.}
+
+        \subsubsection{Fonctionnement du serveur}
+          {Pour éviter certains blocages qui pouvaient apparaître (par exemple quand le serveur demande une confirmation à l'utilisateur, comme "Voulez vous vraiment que je vous amène au Bâtiment C ?"), nous avons choisi de coder notre programme serveur en mode "stateless". Cela signifie que le serveur n'aura aucune information stockée sur l'état du client. Grâce à ce système, lorsque l'on demande une confirmation, le serveur n'est pas bloqué à attendre une réponse à la confirmation. Il attendra tout simplement un message comme les autres, qui pourra soit être une requête qui n'a rien à voir, soit la même requête que précédemment mais avec un petit indicateur pour dire que le client l'a confirmé.}
+
+        \subsubsection{Gestion des sockets}
+          {Afin de permettre la communication entre le client et le serveur, nous avons choisi d'utiliser des sockets en TCP, afin de profiter de tous les avantages de ce protocole (acquittements, reprise sur perte...)\newline}
+          {Comme le serveur est "stateless", il possède simplement un socket qui écoute sur un port et attend de recevoir une connexion et un message. Il répondra au client tant que la connexion est encore ouverte, puis fermera la connexion, et se remettra en attente.\newline}
+          {De son côté, le client se connectera au serveur pour envoyer sa requête, attendra la réponse, et fermera la connexion. Et ce, pour chaque requête émise par l'utilisateur.}
+
+        \subsubsection{Format des messages échangés}
+
+          {Puisque nous utilisons des deux côtés des langages de programmation objet haut niveau, nous avons souhaité utiliser des messages au format JSON. Les messages JSON ont la particularité d'être directement interprétables en tant qu'objets, ce qui simplifie grandement le traitement des messages contenant plusieurs informations
+          simultanées.\newline}
+
+
+          {Voici un exemple de requête JSON envoyée par le client :}
+          \begin{listing}[h]
+            \begin{minted}[frame=single,
+                           framesep=3mm,
+                           linenos=true,
+                           xleftmargin=21pt,
+                           tabsize=4]{js}
+{
+    "type": "question",
+    "msg": "Quelle heure est-il ?"
+}
+            \end{minted}
+          \end{listing}
+
+          {Cet exemple correspond à une simple question, sans particularité, et elle aura pour réponse (après traitement par le serveur) un JSON de la forme :}
+
+          \begin{listing}[h]
+            \begin{minted}[frame=single,
+                           framesep=3mm,
+                           linenos=true,
+                           xleftmargin=21pt,
+                           tabsize=4]{js}
+{
+    "type": "answer",
+    "msg": "Il est 08 heures et 45 minutes."
+}
+            \end{minted}
+          \end{listing}
+
+          {Cependant, il existe des requêtes qui demandent une confirmation à l'utilisateur, afin d'être sûrs d'avoir bien compris ce qu'il demandait. Pour cela, nous allons utiliser d'autres champs JSON, en suivant le schéma suivant :}
+
+          \begin{listing}[h]
+            \begin{minted}[frame=single,
+                           framesep=3mm,
+                           linenos=true,
+                           xleftmargin=21pt,
+                           tabsize=4]{js}
+{
+    "type": "question",
+    "msg": "Amène moi en Amphi 10"
+}
+            \end{minted}
+            \title{Etape 1 : Requête de l'utilisateur}
+          \end{listing}
+
+          \begin{listing}[h]
+            \begin{minted}[frame=single,
+                           framesep=3mm,
+                           linenos=true,
+                           xleftmargin=21pt,
+                           tabsize=4]{js}
+{
+    "type": "askConfirmation",
+    "msg": "Voulez vous que je vous amène à Amphi 10 ?",
+    "originalRequest": "Amène moi en Amphi 10"
+}
+            \end{minted}
+            \title{Etape 2 : Réponse du serveur (demande de confirmation)}
+          \end{listing}
+
+          \begin{listing}[h]
+            \begin{minted}[frame=single,
+                           framesep=3mm,
+                           linenos=true,
+                           xleftmargin=21pt,
+                           tabsize=4]{js}
+{
+    "type": "confirmation",
+    "msg": "Amène moi en Amphi 10",
+    "answer": "Oui"
+}
+            \end{minted}
+            \title{Etape 3 : Confirmation de l'utilisateur}
+          \end{listing}
+
+          \begin{listing}[h]
+            \begin{minted}[frame=single,
+                           framesep=3mm,
+                           linenos=true,
+                           xleftmargin=21pt,
+                           tabsize=4]{js}
+{
+    "type": "answer",
+    "msg": "OK, je vous guide à Amphi 10."
+}
+            \end{minted}
+            \title{Etape 4 : Réponse finale du serveur}
+          \end{listing}
 
       \section{Les interfaces utilisateur}
 
-      \subsection{L'application Android}
+        {Pour intéragir avec le serveur et le configurer, nous avons codé plusieurs clients graphiques :}
+        \subsection{L'application Android}
+          {Bien entendu, la principale interface que nous avons programmé est celle qui permet d'utiliser la tablette embarquée sur le robot pour dialoguer en utilisant l'API STT et TTS de Google.}
+        \subsection{Le programme Python}
+          {Afin d'utiliser le serveur à l'écrit en local, nous avons utilisé une petite interface de debug en python. Ce client permet de tester plus rapidement le serveur en cas de modification, et pourrait facilement être améliorée si la communication à l'écrit s'avérait utile.}
 
-      \subsection{Le programme Python}
-
-      \subsection{Le SkillEditor}
-
+        \subsection{Le SkillEditor}
+          {Enfin, pour générer des TextSkills plus rapidement et plus simplement, nous avons créé une interface permettant de modifier, ajouter ou supprimer les requêtes et réponses connues par le serveur. Chacun peut ainsi éditer le fichier JSON contenant les informations sur les TextSkills à créer lors du démarrage du serveur.}
     \chapter{Conclusion}
 
 \end{document}
