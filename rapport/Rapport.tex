@@ -234,7 +234,6 @@
             \end{minted}
             \title{Etape 1 : Requête de l'utilisateur}
           \end{listing}
-
           \begin{listing}[h]
             \begin{minted}[frame=single,
                            framesep=3mm,
@@ -249,7 +248,6 @@
             \end{minted}
             \title{Etape 2 : Réponse du serveur (demande de confirmation)}
           \end{listing}
-
           \begin{listing}[h]
             \begin{minted}[frame=single,
                            framesep=3mm,
@@ -263,9 +261,7 @@
 }
             \end{minted}
             \title{Etape 3 : Confirmation de l'utilisateur}
-          \end{listing}
 
-          \begin{listing}[h]
             \begin{minted}[frame=single,
                            framesep=3mm,
                            linenos=true,
@@ -279,16 +275,55 @@
             \title{Etape 4 : Réponse finale du serveur}
           \end{listing}
 
+          {En utilisant ce système de communication simple, nous permettons d'utiliser et de créer des clients et interfaces utilisateurs de formes différentes. Nous en avons nous mêmes codé plusieurs.}
+      \newpage
       \section{Les interfaces utilisateur}
 
         {Pour intéragir avec le serveur et le configurer, nous avons codé plusieurs clients graphiques :}
         \subsection{L'application Android}
           {Bien entendu, la principale interface que nous avons programmé est celle qui permet d'utiliser la tablette embarquée sur le robot pour dialoguer en utilisant l'API STT et TTS de Google.}
+          \begin{figure}[h]
+            \centering
+            \includegraphics[scale=0.4]{appli-android.png}
+            \caption{L'application Android, ici testée sur smartphone.}
+          \end{figure}
+
+          {Comme nous avions déjà programmé une application Android pour piloter manuellement le robot (l'application globale sensée être en permanence lancée sur la tablette embarquée) nous en avons profité pour ajouter un simple menu au démarrage, permettant de choisir le mode "IA", mode dont l'interface est représentée sur cette capture. À chaque requête, l'utilisateur doit appuyer sur l'icone de micro, énoncer sa requête, et attendre la réponse.}
+
+
         \subsection{Le programme Python}
           {Afin d'utiliser le serveur à l'écrit en local, nous avons utilisé une petite interface de debug en python. Ce client permet de tester plus rapidement le serveur en cas de modification, et pourrait facilement être améliorée si la communication à l'écrit s'avérait utile.}
+          \begin{figure}[h]
+            \includegraphics[scale=0.6]{gui-python.png}
+            \centering
+          \end{figure}
 
         \subsection{Le SkillEditor}
           {Enfin, pour générer des TextSkills plus rapidement et plus simplement, nous avons créé une interface permettant de modifier, ajouter ou supprimer les requêtes et réponses connues par le serveur. Chacun peut ainsi éditer le fichier JSON contenant les informations sur les TextSkills à créer lors du démarrage du serveur.}
+          \begin{figure}[h]
+            \noindent
+            \makebox[\textwidth]{\includegraphics[scale=0.5]{skill-editor.png}}
+            \centering
+          \end{figure}
+
     \chapter{Conclusion}
+    {Lorsque nous avions commencé ce projet, nous trouvions très ambitieux d'espérer créer de nous même un système d'assistant vocal, tant l'exercice semble complexe, et réservé aux ingénieurs les plus brillants des entreprises les plus influentes du monde. Cependant, nous avons pu, en simplement trois mois, créer un petit assistant vocal fonctionnel, relativement fiable lorsque l'on sait comment lui parler, et très adaptable à de nopmbreux projets embarqués. Bien entendu, nous n'utilisons pas les technologies de pointe que sont les modèles de réseaux de neurones, et qui constituent l'avenir extrèmement probable des programmes d'assistants vocaux. Mais cela ne nous a pas empêché d'obtenir des résultats très convaincants et prometteurs. Ainsi, nous pouvons en conclure qu'en utilisant les bons outils, il est tout à fait envasageable aujourd'hui de se créer son propre petit assistant vocal rapidement.\newline}
+    {Cependant, nous ne pouvons pas nous empêcher de déplorer le manque de solutions libres, notamment en ce qui concerne le TTS et le STT. Malgré nos essais, nous n'avons pas réussi à trouver de programmes de ce type qui soient libres et capables de fonctionner sans connexion Internet. Il existe certes des projets Open Source tels que VoxForge, qui pourraient mener à des solutions très intéressantes dans les prochains temps, mais qui malheureusement aujourd'hui ne sont en général viables qu'en Anglais.\newline}
+    {Dans le cas où un projet de STT/TTS libre, offline, et fiable en Français verrai le jour, nous pourrons très simplement adapter ce projet afin de pouvoir nous passer du système fermé de Google. Cela ne semble malheureusement pas possible ou très difficile à ce jour.\newline}
+    {Notre programme final peut être énormament amélioré. Par exemple, nous pourrions travailler à l'utilisation d'un mot pour interpeller le robot (de la même manière que \textit{"OK Google"}) à la place de l'appui sur un bouton de l'application Android. Mais il ne faut pas oublier également qu'un assistant "rule-based" a besoin d'un grand nombre de phrases connues dans sa base de données afin d'être performant. Il est tout à fait possible d'imaginer l'ajout de centaines de phrases, ce qui rendrait le système beaucoup plus polyvalent. Cependant, nous savons que la complexité du programme augmente drastiquement lorsque le nombre de phrases connues (et donc à comparer avec l'ordre) augmente. Avec nos tests, nous n'avons pas pu remarquer de latence particulière, puisque notre nombre de phrases connues ne dépasse pas une centaine. De plus, rien ne nous garantis que le programme fonctionnera parfaitement et sans latences lorsqu'il sera éxécuté sur le processeur ARM de notre carte embarquée sur le robot. Il nous faudra donc tester notre travail dans ces conditions afin de valider totalement le cahier des charges.\newline}
+    {La totalité de notre travail pourra être retrouvée sur GitHub, et les contributions sont bien entendu les bienvenues.}
+
+
+  \chapter{Annexes}
+    \section{Bibliographie}
+    \section{Code source du projet}
+
+    \section{Remerciements}
+    {Nous tenons à remercier les personnes suivantes, indispensables à la réalisation de ce projet :}
+    \begin{itemize}
+      \item Mr Mostafa Bellafkih, Professeur à L'INPT de Rabat, notre tuteur de stage
+      \item Mr Daniel Ranc, Professeur à Télécom SudParis
+      \item L'ensemble de l'INPT, pour nous avoir accueuilli au sein de leur campus
+    \end{itemize}
 
 \end{document}
