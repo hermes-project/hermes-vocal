@@ -56,12 +56,12 @@ while(42):
         sendError(ret, client)
         print("Close")
         client.close()
-    except ValueError :
-        ret = "ERREUR : Le message envoye au serveur n'est pas un Json"
-        logFail("Response : " + ret)
-        sendError(ret, client)
-        print("Close")
-        client.close()
+    #except ValueError :
+    #    ret = "ERREUR : Le message envoye au serveur n'est pas un Json"
+    #    logFail("Response : " + ret)
+    #    sendError(ret, client)
+    #    print("Close")
+    #    client.close()
 
 
 
