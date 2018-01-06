@@ -48,7 +48,7 @@ def computeOrder(orderJson):    # Traitement d'un ordre simple (splité)
     print(scores) # Debug
 
     if (secMaxSimilitude == maxSimilitude):
-        print("2 phrases de même similarité !")
+        print("2 phrases de meme similarite !")
         return "Je ne comprends pas cette phrase."
 
     if (maxSimilitude == 0):  # Si on a aucun mot commun nulle part
@@ -61,5 +61,3 @@ def computeOrder(orderJson):    # Traitement d'un ordre simple (splité)
 
 
     return ("Je ne comprends pas cette phrase")
-
-

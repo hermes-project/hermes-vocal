@@ -27,8 +27,8 @@ while(42):
 
         if (orderJson["type"] == "question" or orderJson["type"] == "confirmation"):
             print("Reçu ordre de type " + orderJson["type"])
-            print("Request : ")
-            logBlue(orderJson["msg"])
+            #print("Request : ")
+            #logBlue(orderJson["msg"])
 
             orderJson["client"] = client
             orderJson = cleanOrder(orderJson)
@@ -36,7 +36,7 @@ while(42):
             ret = core.executeSkill(orderJson)  # TODO tout transformer en JSON !!!
 
             if (ret != ""):
-                logBold("Response : " + ret)
+                #logBold("Response : " + ret)
                 sendAnswer(ret, client)
 
             print("Close")

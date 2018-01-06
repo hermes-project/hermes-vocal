@@ -31,7 +31,7 @@ def isConfirmation(str):
 
 def recvFromClient(client):
     rawOrder = client.recv(1024).decode('utf-8')
-    print(rawOrder)
+    #print(rawOrder)
 
     orderJson = json.loads(rawOrder)
 
