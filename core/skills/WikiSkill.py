@@ -49,7 +49,7 @@ def response(orderJson):
                     return ("Dommage ! j'en étais capable...")
             else:
                 askConfirmation("Voulez vous que je recherche "+order+" sur Wikipédia ?", orderJson["msg"], orderJson["client"])
-                logBold("Response : " + "Voulez vous que je recherche "+order+" sur Wikipédia ?")
+                #logBold("Response : " + "Voulez vous que je recherche "+order+" sur Wikipédia ?")
                 return ""
 
 ArgSkill(phrases, words,badwords, response)
