@@ -15,12 +15,12 @@ logHeader("######################")
 
 while(42):
 
-    logUnderline("--- Attente de requête ---")
+    logUnderline("--- Attente de requete ---")
 
     socket.listen(5)
     client, address = socket.accept()
 
-    logGreen("Client connecté...\n")
+    logGreen("Client connecte...\n")
 
     try :
         orderJson = recvFromClient(client)
@@ -43,7 +43,7 @@ while(42):
             client.close()
         else:
             print("ORDRE DE TYPE NON RECONNU : " + str(orderJson))
-            ret = "ERREUR : Le message envoyé au serveur n'est pas un bon Json"
+            ret = "ERREUR : Le message envoye au serveur n'est pas un bon Json"
             logFail("Response : " + ret)
             sendError(ret, client)
             print("Close")
@@ -51,19 +51,17 @@ while(42):
 
 
     except KeyError:
-        ret = "ERREUR : Le message envoyé au serveur n'est pas un bon Json"
+        ret = "ERREUR : Le message envoye au serveur n'est pas un bon Json"
         logFail("Response : " + ret)
         sendError(ret, client)
         print("Close")
         client.close()
     except ValueError :
-        ret = "ERREUR : Le message envoyé au serveur n'est pas un Json"
+        ret = "ERREUR : Le message envoye au serveur n'est pas un Json"
         logFail("Response : " + ret)
         sendError(ret, client)
         print("Close")
         client.close()
-
-
 
 
 
