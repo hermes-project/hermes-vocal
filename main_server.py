@@ -26,7 +26,7 @@ while(42):
         orderJson = recvFromClient(client)
 
         if (orderJson["type"] == "question" or orderJson["type"] == "confirmation"):
-            print("Reçu ordre de type " + orderJson["type"])
+            #print("Reçu ordre de type " + orderJson["type"])
             #print("Request : ")
             #logBlue(orderJson["msg"])
 
