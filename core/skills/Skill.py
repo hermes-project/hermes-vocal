@@ -18,7 +18,7 @@ class Skill:
             if keyword not in self.keywords:
                 self.keywords.append(keyword)  # Séparation en mots clés uniques
 
-        print("Skill loaded : " + self.keyphrases[0])
+        #print("Skill loaded : " + self.keyphrases[0])
         self.result = result
         SkillsList.append(self)
 
