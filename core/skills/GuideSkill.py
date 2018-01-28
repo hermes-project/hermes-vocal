@@ -47,3 +47,16 @@ def response(orderJson):
     return("Je n'ai pas compris votre destination.")
 
 ArgSkill(phrases, words,badwords, response)
+
+
+
+phrases2 = ["Avance", "Avance d'un mètre", "Avance un peu"]
+
+words2 = ["avance"]
+badwords2 = []
+
+def response2(orderJson):
+    robot.forward()
+    return("Chaud devant !")
+
+ArgSkill(phrases2, words2, badwords2, response2)

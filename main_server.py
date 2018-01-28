@@ -9,6 +9,10 @@ from core.communication import *
 socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 socket.bind(('', 15555))
 
+sockRobot=socket.socket()
+sockRobot.connect(("127.0.0.1", 56990))
+sockRobot.send(str.encode("motordaemon"))
+
 logHeader("######################")
 logHeader("#    VOCAL SERVER    #")
 logHeader("######################")
