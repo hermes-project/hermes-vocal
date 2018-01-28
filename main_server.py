@@ -7,7 +7,7 @@ from core import core
 from core.communication import *
 
 sockRobot=socket.socket()
-sockRobot.connect(("192.168.0.6", 56990))
+sockRobot.connect(("127.0.0.1", 56987))
 sockRobot.send(str.encode("motordaemon"))
 
 socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
